@@ -19,3 +19,21 @@ The **API** architecture is based on **REST**, using standard **HTTP methods** f
 - **Reporting:** Ability to export detailed reports to PDF and Excel, providing visual and effective analysis of expenses.
 - **RESTful API with Swagger Documentation:** Documented interface that facilitates integration and testing by developers.
 
+
+## Getting Started
+
+For a local copy to work properly, follow the steps below.
+
+### Requirements
+
+- Visual Studio version 2022+ or Visual Studio Code.
+- Windows 10+ or ​​Linux/MacOS with [.NET SDK](https://dotnet.microsoft.com/en-us/download/visual-studio-sdks) installed.
+- Microsoft SQL Server.
+
+### Installation
+1. Clone the repository: 
+```sh
+git clone https://github.com/thrsouza/cashflow-api.git
+```
+2. Fill in the information in the `appsettings.Development.json` file.
+3. Run the API and enjoy your test. :)

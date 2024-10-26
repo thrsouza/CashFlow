@@ -1,5 +1,10 @@
 # CashFlow - API
 
+![badge-dot-net]
+![badge-visual-studio]
+![badge-sqlserver]
+![badge-swagger]
+
 ## About
 
 This project, developed using **.NET 8**, adopts the principles of **Domain-Driven Design (DDD)** to offer a structured and effective solution for managing personal expenses. The main objective is to allow users to register their expenses with informations such as title, date, description, amount and payment type. All data is stored securely in a **SQL Server** database.
@@ -27,7 +32,7 @@ For a local copy to work properly, follow the steps below.
 ### Requirements
 
 - Visual Studio version 2022+ or Visual Studio Code.
-- Windows 10+ or ​​Linux/MacOS with [.NET SDK](https://dotnet.microsoft.com/en-us/download/visual-studio-sdks) installed.
+- Windows 10+ or ​​Linux/MacOS with [.NET SDK][dot-net-sdk] installed.
 - Microsoft SQL Server.
 
 ### Installation
@@ -37,3 +42,13 @@ git clone https://github.com/thrsouza/cashflow-api.git
 ```
 2. Fill in the information in the `appsettings.Development.json` file.
 3. Run the API and enjoy your test. :)
+
+
+<!-- Links -->
+[dot-net-sdk]: https://dotnet.microsoft.com/en-us/download/dotnet/8.0
+
+<!-- Badges -->
+[badge-dot-net]: https://img.shields.io/badge/.NET-512BD4?logo=dotnet&logoColor=fff&style=for-the-badge
+[badge-sqlserver]: https://img.shields.io/badge/SQL%20Server-0078D4?logo=windows&logoColor=fff&style=for-the-badge
+[badge-visual-studio]: https://img.shields.io/badge/Visual%20Studio-5C2D91?logo=visualstudio&logoColor=fff&style=for-the-badge
+[badge-swagger]: https://img.shields.io/badge/Swagger-85EA2D?logo=swagger&logoColor=000&style=for-the-badge

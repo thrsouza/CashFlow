@@ -1,0 +1,107 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-Black.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-BlackItalic.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-Bold.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-BoldItalic.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-ExtraBold.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-ExtraBoldItalic.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-ExtraLight.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-ExtraLightItalic.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-Italic.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-Light.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-LightItalic.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-Medium.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-MediumItalic.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-Regular.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-SemiBold.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-SemiBoldItalic.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-Thin.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-ThinItalic.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-Black.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-BlackItalic.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-Bold.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-BoldItalic.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-ExtraBold.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-ExtraBoldItalic.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-ExtraLight.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-ExtraLightItalic.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-Italic.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-Light.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-LightItalic.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-Medium.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-MediumItalic.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-Regular.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-SemiBold.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-SemiBoldItalic.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-Thin.ttf" />
+    <None Remove="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-ThinItalic.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-Black.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-BlackItalic.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-Bold.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-BoldItalic.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-ExtraBold.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-ExtraBoldItalic.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-ExtraLight.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-ExtraLightItalic.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-Italic.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-Light.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-LightItalic.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-Medium.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-MediumItalic.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-Regular.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-SemiBold.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-SemiBoldItalic.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-Thin.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\Raleway\Raleway-ThinItalic.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-Black.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-BlackItalic.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-Bold.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-BoldItalic.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-ExtraBold.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-ExtraBoldItalic.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-ExtraLight.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-ExtraLightItalic.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-Italic.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-Light.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-LightItalic.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-Medium.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-MediumItalic.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-Regular.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-SemiBold.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-SemiBoldItalic.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-Thin.ttf" />
+    <EmbeddedResource Include="UseCases\Expenses\Reports\Pdf\Fonts\WorkSans\WorkSans-ThinItalic.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="ClosedXML" Version="0.104.1" />
+    <PackageReference Include="FluentValidation" Version="11.10.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+    <PackageReference Include="PDFsharp-MigraDoc" Version="6.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CashFlow.Communication\CashFlow.Communication.csproj" />
+    <ProjectReference Include="..\CashFlow.Domain\CashFlow.Domain.csproj" />
+    <ProjectReference Include="..\CashFlow.Exeption\CashFlow.Exeption.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="UseCases\Expenses\Reports\Pdf\Logo\logo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

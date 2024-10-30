@@ -25,7 +25,7 @@ public static class InfrastructureServiceCollectionExtensions
 
         services.AddDbContext<CashFlowDbContext>(optionsBuilder => 
         {
-            optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseSqlServer(connectionString, builder => builder.EnableRetryOnFailure());
         });
     }
 

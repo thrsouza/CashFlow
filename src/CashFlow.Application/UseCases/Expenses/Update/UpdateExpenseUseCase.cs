@@ -24,8 +24,6 @@ public class UpdateExpenseUseCase(
         }
 
         mapper.Map(request, entity);
-        
-        entity.UpdatedDate = DateTimeOffset.UtcNow;
 
         repository.Update(entity);
 

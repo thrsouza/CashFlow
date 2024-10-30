@@ -19,7 +19,8 @@ public static class InfrastructureServiceCollectionExtensions
     {
         AddDbContext(services, configuration);
         AddRepositories(services);
-
+        AddAccessTokenGenerator(services, configuration);
+        
         services.AddScoped<IPasswordEncryptor, PasswordEncryptor>();
     }
 
@@ -42,6 +43,13 @@ public static class InfrastructureServiceCollectionExtensions
 
         services.AddScoped<IUsersReadOnlyRepository, UsersRepository>();
         services.AddScoped<IUsersWriteOnlyRepository, UsersRepository>();
+    }
+    
+    private static void AddAccessTokenGenerator(IServiceCollection services, IConfiguration configuration)
+    {
+        var expirationInMinutes = configuration.GetValue<uint>("Settings:Jwt:ExpiresInMinutes");
+        var secret = configuration.GetValue<string>("Settings:Jwt:Secret");
         
+        services.AddScoped<IAccessTokenGenerator, AccessTokenGenerator>(_ => new AccessTokenGenerator(expirationInMinutes, secret!));
     }
 }

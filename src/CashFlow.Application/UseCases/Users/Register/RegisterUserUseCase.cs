@@ -13,7 +13,8 @@ namespace CashFlow.Application.UseCases.Users.Register;
 
 public class RegisterUserUseCase(
     IUsersReadOnlyRepository usersReadOnlyRepository, 
-    IUsersWriteOnlyRepository usersWriteOnlyRepository, 
+    IUsersWriteOnlyRepository usersWriteOnlyRepository,
+    IAccessTokenGenerator accessTokenGenerator,
     IPasswordEncryptor passwordEncryptor, 
     IUnitOfWork unitOfWork,
     IMapper mapper) 
@@ -30,10 +31,11 @@ public class RegisterUserUseCase(
         await usersWriteOnlyRepository.Add(entity);
 
         await unitOfWork.Commit();
-        
+
         return new ResponseRegisteredUserJson
         {
-            Name = entity.Name
+            Name = entity.Name,
+            Token = accessTokenGenerator.Generate(entity)
         };
     }
 

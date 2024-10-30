@@ -15,6 +15,13 @@ internal class UsersRepository(CashFlowDbContext dbContext) : IUsersReadOnlyRepo
         return result;
     }
 
+    public async Task<User?> GetByEmail(string email)
+    {
+        return await dbContext.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(user => user.Email.Equals(email));
+    }
+
     public async Task Add(User user)
     {
         await dbContext.Users.AddAsync(user);

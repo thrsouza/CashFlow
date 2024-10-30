@@ -1,4 +1,5 @@
 ﻿using CashFlow.Application.AutoMapper;
+using CashFlow.Application.UseCases.Auth.SignIn;
 using CashFlow.Application.UseCases.Expenses.Delete;
 using CashFlow.Application.UseCases.Expenses.GetAll;
 using CashFlow.Application.UseCases.Expenses.GetById;
@@ -34,6 +35,9 @@ public static class ApplicationServiceCollectionExtensions
 
     private static void AddUseCases(this IServiceCollection services)
     {
+        // Auth
+        services.AddScoped<ISignInUseCase, SignInUseCase>();
+        
         // Expenses
         services.AddScoped<IGetAllExpenseUseCase, GetAllExpenseUseCase>();
         services.AddScoped<IGetByIdExpenseUseCase, GetByIdExpenseUseCase>();

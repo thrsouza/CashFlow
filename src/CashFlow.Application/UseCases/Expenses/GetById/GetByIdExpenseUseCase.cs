@@ -16,7 +16,7 @@ public class GetByIdExpenseUseCase(
 
         if (result is null)
         {
-            throw new CashFlowNotFoundException(ResourceErrorMessages.ExpenseNotFound);
+            throw new CashFlowNotFoundException();
         }
 
         return mapper.Map<ResponseExpenseJson>(result);

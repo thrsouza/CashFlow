@@ -132,8 +132,8 @@
   <data name="PaymentTypeIsNotValid" xml:space="preserve">
     <value>O tipo de pagamento é inválido.</value>
   </data>
-  <data name="ExpenseNotFound" xml:space="preserve">
-    <value>Despesa não encontrada.</value>
+  <data name="DataNotFound" xml:space="preserve">
+    <value>Dados não encontrados.</value>
   </data>
   <data name="NameIsRequired" xml:space="preserve">
     <value>O nome é obrigatório.</value>
@@ -149,5 +149,8 @@
   </data>
   <data name="EmailAlreadyRegistered" xml:space="preserve">
     <value>O e-mail já está sendo utilizado.</value>
+  </data>
+  <data name="CredentialsInvalid" xml:space="preserve">
+    <value>E-mail e/ou senha inválida.</value>
   </data>
 </root>

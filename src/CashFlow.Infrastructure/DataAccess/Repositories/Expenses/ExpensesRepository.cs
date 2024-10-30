@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace CashFlow.Infrastructure.DataAccess.Repositories.Expenses;
 
-internal class ExpensesRepository(CashFlowDbContext dbContext)
+internal class ExpensesRepository(CashFlowDbContext dbContext) 
     : IExpensesReadOnlyRepository, IExpensesWriteOnlyRepository, IExpensesUpdateOnlyRepository
 {
     public async Task<List<Expense>> GetAll()

@@ -2,7 +2,7 @@
 
 namespace CashFlow.Exception.ExceptionsBase;
 
-public class CashFlowNotFoundException(string message) : CashFlowException(message)
+public class CashFlowNotFoundException() : CashFlowException(ResourceErrorMessages.DataNotFound)
 {
     public override int StatusCode => (int)HttpStatusCode.NotFound;
 

@@ -19,7 +19,7 @@ public class DeleteExpenseUseCase(
     {
         var result = await repository.Delete(id);
 
-        if (!result) throw new CashFlowNotFoundException(ResourceErrorMessages.ExpenseNotFound);
+        if (!result) throw new CashFlowNotFoundException();
         
         await unitOfWork.Commit();
     }

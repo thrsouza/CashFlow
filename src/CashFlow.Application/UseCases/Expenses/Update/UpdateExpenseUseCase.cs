@@ -20,7 +20,7 @@ public class UpdateExpenseUseCase(
 
         if (entity is null)
         {
-            throw new CashFlowNotFoundException(ResourceErrorMessages.ExpenseNotFound);
+            throw new CashFlowNotFoundException();
         }
 
         mapper.Map(request, entity);

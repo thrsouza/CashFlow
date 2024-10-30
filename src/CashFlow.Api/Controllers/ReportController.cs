@@ -4,6 +4,7 @@ using CashFlow.Application.UseCases.Expenses.Reports.Pdf;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CashFlow.Api.Controllers;
+
 [Route("api/[controller]")]
 [ApiController]
 public class ReportController : ControllerBase
@@ -40,6 +41,6 @@ public class ReportController : ControllerBase
 
     private static string CreateFileName(DateOnly month)
     {
-        return $"{month.Year}-{month.Month}_{Guid.NewGuid().ToString().Split('-')[0]}";
+        return $"{month.Year}{month.Month}_{Guid.NewGuid().ToString().Split('-')[0]}";
     }
 }

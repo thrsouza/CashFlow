@@ -46,10 +46,8 @@ await MigrateDatabase();
 
 app.Run();
 
-return;
-
 async Task MigrateDatabase()
 {
     await using var scope = app.Services.CreateAsyncScope();
-    await DatabaseMigration.MigrateDatabaseAsync(scope.ServiceProvider);
+    await DatabaseMigration.MigrateDatabase(scope.ServiceProvider);
 }

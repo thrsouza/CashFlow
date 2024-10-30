@@ -7,13 +7,14 @@ namespace CashFlow.Infrastructure.DataAccess;
 internal class CashFlowDbContext(DbContextOptions options) : DbContext(options)
 {
     public DbSet<Expense> Expenses { get; set; }
-    public DbSet<Expense> Users { get; set; }
+    public DbSet<User> Users { get; set; }
     
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Expense>(model =>
         {
+            model.ToTable("Expenses");
             model.HasKey(x => x.Id);
             model.Property(x => x.Id).HasColumnType("BIGINT").IsRequired();
             model.Property(x => x.UserId).HasColumnType("BIGINT").IsRequired();
@@ -26,6 +27,7 @@ internal class CashFlowDbContext(DbContextOptions options) : DbContext(options)
         
         modelBuilder.Entity<User>(model =>
         {
+            model.ToTable("Users");
             model.HasKey(x => x.Id);
             model.Property(x => x.Id).HasColumnType("BIGINT").IsRequired();
             model.Property(x => x.Name).HasColumnType("VARCHAR(64)").IsRequired();

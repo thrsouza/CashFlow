@@ -135,4 +135,19 @@
   <data name="ExpenseNotFound" xml:space="preserve">
     <value>Despesa não encontrada.</value>
   </data>
+  <data name="NameIsRequired" xml:space="preserve">
+    <value>O nome é obrigatório.</value>
+  </data>
+  <data name="EmailIsRequired" xml:space="preserve">
+    <value>O e-mail é obrigatório.</value>
+  </data>
+  <data name="EmailIsNotValid" xml:space="preserve">
+    <value>O e-mail é inválido.</value>
+  </data>
+  <data name="PasswordIsNotValid" xml:space="preserve">
+    <value>Sua senha deve ter no mínimo 8 caracteres, contendo pelo menos uma letra maiúscula, uma letra minúscula, um nomero e um caractere especial (por exemplo: !, ?, *,.).</value>
+  </data>
+  <data name="EmailAlreadyRegistered" xml:space="preserve">
+    <value>O e-mail já está sendo utilizado.</value>
+  </data>
 </root>

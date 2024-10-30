@@ -1,13 +1,15 @@
 ﻿using CashFlow.Domain.Repositories;
 using CashFlow.Domain.Repositories.Expenses;
+using CashFlow.Domain.Repositories.Users;
+using CashFlow.Domain.Security;
 using CashFlow.Infrastructure.DataAccess;
 using CashFlow.Infrastructure.DataAccess.Repositories;
 using CashFlow.Infrastructure.DataAccess.Repositories.Expenses;
+using CashFlow.Infrastructure.DataAccess.Repositories.Users;
+using CashFlow.Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using System.Runtime.CompilerServices;
 
 namespace CashFlow.Infrastructure;
 
@@ -17,6 +19,8 @@ public static class InfrastructureServiceCollectionExtensions
     {
         AddDbContext(services, configuration);
         AddRepositories(services);
+
+        services.AddScoped<IPasswordEncryptor, PasswordEncryptor>();
     }
 
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
@@ -25,7 +29,7 @@ public static class InfrastructureServiceCollectionExtensions
 
         services.AddDbContext<CashFlowDbContext>(optionsBuilder => 
         {
-            optionsBuilder.UseSqlServer(connectionString, builder => builder.EnableRetryOnFailure());
+            optionsBuilder.UseSqlServer(connectionString);
         });
     }
 
@@ -35,6 +39,9 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddScoped<IExpensesReadOnlyRepository, ExpensesRepository>();
         services.AddScoped<IExpensesWriteOnlyRepository, ExpensesRepository>();
         services.AddScoped<IExpensesUpdateOnlyRepository, ExpensesRepository>();
+
+        services.AddScoped<IUsersReadOnlyRepository, UsersRepository>();
+        services.AddScoped<IUsersWriteOnlyRepository, UsersRepository>();
         
     }
 }

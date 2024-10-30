@@ -19,6 +19,7 @@ public class RegisterExpenseUseCase(
         Validate(request);
 
         var entity = mapper.Map<Expense>(request);
+        entity.UserId = 1;
 
         await repository.Add(entity);
 

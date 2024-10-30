@@ -78,11 +78,56 @@ namespace CashFlow.Exception {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The e-mail is already in use..
+        /// </summary>
+        public static string EmailAlreadyRegistered {
+            get {
+                return ResourceManager.GetString("EmailAlreadyRegistered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The e-mail is not valid..
+        /// </summary>
+        public static string EmailIsNotValid {
+            get {
+                return ResourceManager.GetString("EmailIsNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The e-mail is required..
+        /// </summary>
+        public static string EmailIsRequired {
+            get {
+                return ResourceManager.GetString("EmailIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expense not found..
         /// </summary>
         public static string ExpenseNotFound {
             get {
                 return ResourceManager.GetString("ExpenseNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name ir required..
+        /// </summary>
+        public static string NameIsRequired {
+            get {
+                return ResourceManager.GetString("NameIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your password must be at least 8 characters long, containing at least one British letter, one lowercase letter, a name and a special character (for example: !, ?, *,.).e.
+        /// </summary>
+        public static string PasswordIsNotValid {
+            get {
+                return ResourceManager.GetString("PasswordIsNotValid", resourceCulture);
             }
         }
         

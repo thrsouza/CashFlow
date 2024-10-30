@@ -53,7 +53,7 @@ namespace CashFlow.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Expense");
+                    b.ToTable("Expenses", (string)null);
                 });
 
             modelBuilder.Entity("CashFlow.Domain.Entities.User", b =>
@@ -86,7 +86,7 @@ namespace CashFlow.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("CashFlow.Domain.Entities.Expense", b =>

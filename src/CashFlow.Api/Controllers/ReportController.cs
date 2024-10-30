@@ -1,8 +1,7 @@
-﻿using CashFlow.Application.UseCases.Expenses.Reports.Excel;
+﻿using System.Net.Mime;
+using CashFlow.Application.UseCases.Expenses.Reports.Excel;
 using CashFlow.Application.UseCases.Expenses.Reports.Pdf;
-using CashFlow.Communication.Requests;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Mime;
 
 namespace CashFlow.Api.Controllers;
 [Route("api/[controller]")]
@@ -16,10 +15,10 @@ public class ReportController : ControllerBase
         [FromServices] IGenerateExpensesReportExcelUseCase useCase,
         [FromQuery] DateOnly month)
     {
-        byte[] file = await useCase.Execute(month);
+        var file = await useCase.Execute(month);
 
         if (file.Length > 0)
-            return File(file, MediaTypeNames.Application.Octet, "report.xlsx");
+            return File(file, MediaTypeNames.Application.Octet, $"{CreateFileName(month)}.xlsx");
         
         return NoContent();
     }
@@ -31,11 +30,16 @@ public class ReportController : ControllerBase
         [FromServices] IGenerateExpensesReportPdfUseCase useCase,
         [FromQuery] DateOnly month)
     {
-        byte[] file = await useCase.Execute(month);
+        var file = await useCase.Execute(month);
 
         if (file.Length > 0)
-            return File(file, MediaTypeNames.Application.Pdf, "report.pdf");
+            return File(file, MediaTypeNames.Application.Pdf, $"{CreateFileName(month)}.pdf");
 
         return NoContent();
+    }
+
+    private static string CreateFileName(DateOnly month)
+    {
+        return $"{month.Year}-{month.Month}_{Guid.NewGuid().ToString().Split('-')[0]}";
     }
 }

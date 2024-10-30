@@ -6,15 +6,10 @@ using ClosedXML.Excel;
 
 namespace CashFlow.Application.UseCases.Expenses.Reports.Excel;
 
-internal class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUseCase
+internal class GenerateExpensesReportExcelUseCase(IExpensesReadOnlyRepository repository)
+    : IGenerateExpensesReportExcelUseCase
 {
-    private const string CURRENCY_SYMBOL = "$";
-    private readonly IExpensesReadOnlyRepository _repository;
-
-    public GenerateExpensesReportExcelUseCase(IExpensesReadOnlyRepository repository)
-    {
-        this._repository = repository;
-    }
+    private const string CurrencySymbol = "$";
 
     public async Task<byte[]> Execute(DateOnly date)
     {
@@ -22,14 +17,9 @@ internal class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcel
         var startDate = new DateTime(year: date.Year, month: date.Month, day: 1).Date;
         var endDate = new DateTime(year: date.Year, month: date.Month, day: daysInMonth, hour: 23, minute: 59, second: 59);
 
-        var expenses = await  _repository.GetAllByDate(startDate, endDate);
+        var expenses = await repository.GetAllByDate(startDate, endDate);
 
-        if (expenses.Count == 0)
-            return [];
-
-        var title = $"{ResourceReportGenerationMessages.EXPENSES_FOR}  {date:Y}";
-
-        return CreateReport(date: date, expenses: expenses);
+        return expenses.Count == 0 ? [] : CreateReport(date: date, expenses: expenses);
     }
 
     private byte[] CreateReport(DateOnly date, IList<Expense> expenses)
@@ -40,7 +30,7 @@ internal class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcel
         workbook.Style.Font.FontSize = 10;
         workbook.Style.Font.FontName = "Calibri";
 
-        var title = string.Format(ResourceReportGenerationMessages.EXPENSES_FOR, date.ToString("Y"));
+        var title = string.Format(ResourceReportGenerationMessages.ExpensesFor, date.ToString("Y"));
         var worksheet = workbook.Worksheets.Add(title);
 
         InsertHeader(worksheet);
@@ -51,9 +41,9 @@ internal class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcel
             worksheet.Cell($"A{row}").Value = expense.Title;
             worksheet.Cell($"B{row}").Value = expense.Date;
             worksheet.Cell($"C{row}").Value = expense.PaymentType.ParseToString();
-            
+
             worksheet.Cell($"D{row}").Value = expense.Amount;
-            worksheet.Cell($"D{row}").Style.NumberFormat.Format = $"- {CURRENCY_SYMBOL} #,##0.00";
+            worksheet.Cell($"D{row}").Style.NumberFormat.Format = $"- {CurrencySymbol} #,##0.00";
 
             worksheet.Cell($"E{row}").Value = expense.Description;
 
@@ -70,11 +60,11 @@ internal class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcel
 
     private void InsertHeader(IXLWorksheet worksheet)
     {
-        worksheet.Cell("A1").Value = ResourceReportGenerationMessages.TITLE;
-        worksheet.Cell("B1").Value = ResourceReportGenerationMessages.DATE;
-        worksheet.Cell("C1").Value = ResourceReportGenerationMessages.PAYMENT_TYPE;
-        worksheet.Cell("D1").Value = ResourceReportGenerationMessages.AMOUNT;
-        worksheet.Cell("E1").Value = ResourceReportGenerationMessages.DESCRIPTION;
+        worksheet.Cell("A1").Value = ResourceReportGenerationMessages.Title;
+        worksheet.Cell("B1").Value = ResourceReportGenerationMessages.Date;
+        worksheet.Cell("C1").Value = ResourceReportGenerationMessages.PaymentType;
+        worksheet.Cell("D1").Value = ResourceReportGenerationMessages.Amount;
+        worksheet.Cell("E1").Value = ResourceReportGenerationMessages.Description;
 
         worksheet.Cells("A1:E1").Style.Fill.BackgroundColor = XLColor.Black;
         worksheet.Cells("A1:E1").Style.Font.FontColor = XLColor.White;

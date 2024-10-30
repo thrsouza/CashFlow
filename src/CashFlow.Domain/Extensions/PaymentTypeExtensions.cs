@@ -9,10 +9,10 @@ public static class PaymentTypeExtensions
     {
         return paymentType switch
         {
-            PaymentType.Cash => ResourceReportGenerationMessages.CASH,
-            PaymentType.CreditCard => ResourceReportGenerationMessages.CREDIT_CARD,
-            PaymentType.DebitCard => ResourceReportGenerationMessages.DEBIT_CARD,
-            PaymentType.EletronicTransfer => ResourceReportGenerationMessages.ELETRONIC_TRANSFER,
+            PaymentType.Cash => ResourceReportGenerationMessages.Cash,
+            PaymentType.CreditCard => ResourceReportGenerationMessages.CreditCard,
+            PaymentType.DebitCard => ResourceReportGenerationMessages.DebitCard,
+            PaymentType.BankTransfer => ResourceReportGenerationMessages.BankTransfer,
             _ => string.Empty
         };
     }

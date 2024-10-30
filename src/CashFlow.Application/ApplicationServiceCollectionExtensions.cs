@@ -1,6 +1,7 @@
 ﻿using CashFlow.Application.AutoMapper;
 using CashFlow.Application.UseCases.Expenses.Delete;
 using CashFlow.Application.UseCases.Expenses.GetAll;
+using CashFlow.Application.UseCases.Expenses.GetById;
 using CashFlow.Application.UseCases.Expenses.Register;
 using CashFlow.Application.UseCases.Expenses.Reports.Excel;
 using CashFlow.Application.UseCases.Expenses.Reports.Pdf;
@@ -30,7 +31,7 @@ public static class ApplicationServiceCollectionExtensions
         services.AddAutoMapper(typeof(AutoMapping));
     }
 
-    public static void AddUseCases(this IServiceCollection services)
+    private static void AddUseCases(this IServiceCollection services)
     {
         // Expenses
         services.AddScoped<IGetAllExpenseUseCase, GetAllExpenseUseCase>();

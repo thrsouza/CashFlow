@@ -1,57 +1,47 @@
 ﻿using AutoMapper;
 using CashFlow.Communication.Requests;
-using CashFlow.Domain.Entities;
 using CashFlow.Domain.Repositories;
 using CashFlow.Domain.Repositories.Expenses;
 using CashFlow.Exeption;
 using CashFlow.Exeption.ExceptionsBase;
 
 namespace CashFlow.Application.UseCases.Expenses.Update;
-public class UpdateExpenseUseCase : IUpdateExpenseUseCase
+public class UpdateExpenseUseCase(
+    IExpensesUpdateOnlyRepository repository,
+    IUnitOfWork unitOfWork,
+    IMapper mapper)
+    : IUpdateExpenseUseCase
 {
-    private readonly IExpensesUpdateOnlyRepository _repository;
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
-
-    public UpdateExpenseUseCase(
-        IExpensesUpdateOnlyRepository repository,
-        IUnitOfWork unitOfWork,
-        IMapper mapper)
-    {
-        this._repository = repository;
-        this._unitOfWork = unitOfWork;
-        this._mapper = mapper;
-    }
-
     public async Task Execute(long id, RequestExpenseJson request)
     {
-        Validade(request);
+        Validate(request);
 
-        var entity = await this._repository.GetById(id);
+        var entity = await repository.GetById(id);
 
         if (entity is null)
         {
-            throw new CashFlowNotFoundException(ResourceErrorMessages.EXPENSE_NOT_FOUND);
+            throw new CashFlowNotFoundException(ResourceErrorMessages.ExpenseNotFound);
         }
 
-        this._mapper.Map(request, entity);
+        mapper.Map(request, entity);
+        
+        entity.UpdatedDate = DateTimeOffset.UtcNow;
 
-        this._repository.Update(entity);
+        repository.Update(entity);
 
-        await this._unitOfWork.Commit();
+        await unitOfWork.Commit();
     }
 
-    private void Validade(RequestExpenseJson request)
+    private static void Validate(RequestExpenseJson request)
     {
         var validator = new RequestExpenseValidator();
 
         var result = validator.Validate(request);
 
-        if (!result.IsValid)
-        {
-            var errorMessages = result.Errors.Select(err => err.ErrorMessage).ToList();
+        if (result.IsValid) return;
+        
+        var errorMessages = result.Errors.Select(err => err.ErrorMessage).ToList();
 
-            throw new CashFlowValidationErrorException(errorMessages: errorMessages);
-        }
+        throw new CashFlowValidationErrorException(errorMessages: errorMessages);
     }
 }

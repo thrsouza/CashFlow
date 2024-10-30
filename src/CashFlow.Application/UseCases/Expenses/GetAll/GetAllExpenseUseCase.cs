@@ -6,26 +6,18 @@ using CashFlow.Domain.Entities;
 
 namespace CashFlow.Application.UseCases.Expenses.GetAll;
 
-public class GetAllExpenseUseCase : IGetAllExpenseUseCase
+public class GetAllExpenseUseCase(
+    IExpensesReadOnlyRepository repository,
+    IMapper mapper) 
+    : IGetAllExpenseUseCase
 {
-    private readonly IExpensesReadOnlyRepository _repository;
-    private readonly IMapper _mapper;
-
-    public GetAllExpenseUseCase(
-        IExpensesReadOnlyRepository repository,
-        IMapper mapper)
-    {
-        this._repository = repository;
-        this._mapper = mapper;
-    }
-
     public async Task<ResponseExpensesJson> Execute()
     {
-        var result = await this._repository.GetAll();
+        var result = await repository.GetAll();
 
         return new ResponseExpensesJson
         {
-            Data = this._mapper.Map<List<ResponseExpensePreviewJson>>(result)
+            Data = mapper.Map<List<ResponseExpensePreviewJson>>(result)
         };
     }
 }

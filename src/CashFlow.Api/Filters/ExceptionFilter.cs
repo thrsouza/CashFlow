@@ -16,11 +16,11 @@ public class ExceptionFilter : IExceptionFilter
         } 
         else
         {
-            ThrowUnkownError(context);
+            ThrowUnknownError(context);
         }
     }
 
-    private void HandleCashFlowException(ExceptionContext context)
+    private static void HandleCashFlowException(ExceptionContext context)
     {
         var cashFlowException = (CashFlowException)context.Exception;
         context.HttpContext.Response.StatusCode = cashFlowException.StatusCode;
@@ -28,9 +28,9 @@ public class ExceptionFilter : IExceptionFilter
         context.Result = new ObjectResult(errorResponse);
     }
 
-    private void ThrowUnkownError(ExceptionContext context)
+    private static void ThrowUnknownError(ExceptionContext context)
     {
-        var errorResponse = new ResponseErrorJson([ResourceErrorMessages.UNKNOWN_ERROR]);
+        var errorResponse = new ResponseErrorJson([ResourceErrorMessages.UnknownError]);
         context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
         context.Result = new ObjectResult(errorResponse);
     }

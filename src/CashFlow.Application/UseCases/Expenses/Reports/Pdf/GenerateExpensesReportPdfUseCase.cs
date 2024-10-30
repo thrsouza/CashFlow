@@ -1,4 +1,5 @@
-﻿using CashFlow.Application.UseCases.Expenses.Reports.Pdf.Colors;
+﻿using System.Reflection;
+using CashFlow.Application.UseCases.Expenses.Reports.Pdf.Colors;
 using CashFlow.Application.UseCases.Expenses.Reports.Pdf.Fonts;
 using CashFlow.Domain.Entities;
 using CashFlow.Domain.Extensions;
@@ -7,21 +8,15 @@ using CashFlow.Domain.Repositories.Expenses;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
-using System.Reflection;
 
 namespace CashFlow.Application.UseCases.Expenses.Reports.Pdf;
-public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCase
+
+public class GenerateExpensesReportPdfUseCase(IExpensesReadOnlyRepository repository)
+    : IGenerateExpensesReportPdfUseCase
 {
-    private const string CURRENCY_SYMBOL = "$";
-    private const int EXPENSE_TABLE_ROW_HEIGHT = 25;
-    private const int EXPENSE_TABLE_LEFT_INDENT = 16;
-
-    private readonly IExpensesReadOnlyRepository _repository;
-
-    public GenerateExpensesReportPdfUseCase(IExpensesReadOnlyRepository repository)
-    {
-        this._repository = repository;
-    }
+    private const string CurrencySymbol = "$";
+    private const int ExpenseTableRowHeight = 25;
+    private const int ExpenseTableLeftIndent = 16;
 
     public async Task<byte[]> Execute(DateOnly date)
     {
@@ -29,21 +24,19 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
         var startDate = new DateTime(year: date.Year, month: date.Month, day: 1).Date;
         var endDate = new DateTime(year: date.Year, month: date.Month, day: daysInMonth, hour: 23, minute: 59, second: 59);
 
-        var expenses = await _repository.GetAllByDate(startDate, endDate);
+        var expenses = await repository.GetAllByDate(startDate, endDate);
 
-        if (expenses.Count == 0)
-            return [];
-
-        return CreateReport(date: date, expenses: expenses);
+        return expenses.Count == 0 ? [] : CreateReport(date: date, expenses: expenses);
     }
 
     private byte[] CreateReport(DateOnly date, IList<Expense> expenses)
     {
-        var title = string.Format(ResourceReportGenerationMessages.EXPENSES_FOR, date.ToString("Y"));
+        var title = string.Format(ResourceReportGenerationMessages.ExpensesFor, date.ToString("Y"));
 
-        var document = new Document();
-        document.Info.Title = title;
-        document.Info.Author = "Thiago Souza";
+        var document = new Document
+        {
+            Info = { Title = title, Author = "Thiago Souza" }
+        };
 
         var style = document.Styles["Normal"]!;
         style.Font.Name = FontHelper.Raleway.REGULAR;
@@ -57,17 +50,17 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
             var table = CreateExpenseTable(page);
 
             var row = table.AddRow();
-            row.Height = EXPENSE_TABLE_ROW_HEIGHT;
+            row.Height = ExpenseTableRowHeight;
 
             AddExpenseTitleHeader(row.Cells[0], expense.Title);
             AddExpenseAmountHeader(row.Cells[3]);
 
             row = table.AddRow();
-            row.Height = EXPENSE_TABLE_ROW_HEIGHT;
+            row.Height = ExpenseTableRowHeight;
 
             row.Cells[0].AddParagraph(expense.Date.ToString("D"));
             SetStyleBaseForExpenseInformation(row.Cells[0]);
-            row.Cells[0].Format.LeftIndent = EXPENSE_TABLE_LEFT_INDENT;
+            row.Cells[0].Format.LeftIndent = ExpenseTableLeftIndent;
 
             row.Cells[1].AddParagraph(expense.Date.ToString("t"));
             SetStyleBaseForExpenseInformation(row.Cells[1]);
@@ -104,44 +97,44 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
         return section;
     }
 
-    private void CreateHeaderWithProfilePhotoAndName(Section page)
+    private static void CreateHeaderWithProfilePhotoAndName(Section page)
     {
         var header = page.AddTable();
         header.AddColumn();
         header.AddColumn("360");
 
         var headerRow = header.AddRow();
-        
+
         var assembly = Assembly.GetExecutingAssembly();
         var dirName = Path.GetDirectoryName(assembly.Location)!;
 
         var logo = headerRow.Cells[0].AddImage(Path.Combine(dirName, "Images", "Logo.png"));
         logo.Width = new Unit(56, UnitType.Point);
 
-        headerRow.Cells[1].AddParagraph(string.Format(ResourceReportGenerationMessages.HELLO, "Thiago Souza"));
+        headerRow.Cells[1].AddParagraph(string.Format(ResourceReportGenerationMessages.Hello, "Thiago Souza"));
         headerRow.Cells[1].Format.Font = new Font { Name = FontHelper.Raleway.BLACK, Size = 16 };
-        headerRow.Cells[1].VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Center;
+        headerRow.Cells[1].VerticalAlignment = VerticalAlignment.Center;
         headerRow.Cells[1].Format.LeftIndent = 8;
     }
 
-    private void CreateTotalSpentSection(Section page, DateOnly date, decimal totalExpenses)
+    private static void CreateTotalSpentSection(Section page, DateOnly date, decimal totalExpenses)
     {
         var paragraph = page.AddParagraph();
         paragraph.Format.SpaceBefore = "40";
         paragraph.Format.SpaceAfter = "40";
 
         paragraph.AddFormattedText(
-            string.Format(ResourceReportGenerationMessages.TOTAL_SPENT_IN, date.ToString("Y")),
+            string.Format(ResourceReportGenerationMessages.TotalSpentIn, date.ToString("Y")),
             new Font { Name = FontHelper.Raleway.REGULAR, Size = 15 });
 
         paragraph.AddLineBreak();
 
         paragraph.AddFormattedText(
-            $"{totalExpenses:#,##0.00} {CURRENCY_SYMBOL}",
+            $"{totalExpenses:#,##0.00} {CurrencySymbol}",
             new Font { Name = FontHelper.WorkSans.BLACK, Size = 50 });
     }
 
-    private Table CreateExpenseTable(Section page)
+    private static Table CreateExpenseTable(Section page)
     {
         var table = page.AddTable();
         table.AddColumn("195").Format.Alignment = ParagraphAlignment.Left;
@@ -151,59 +144,60 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
         return table;
     }
 
-    private void AddExpenseTitleHeader(Cell cell, string title)
+    private static void AddExpenseTitleHeader(Cell cell, string title)
     {
         cell.AddParagraph(title);
-        cell.Format.Font = new Font { Name = FontHelper.Raleway.BLACK, Size = 14, Color = ColorHelper.BLACK };
-        cell.Shading.Color = ColorHelper.RED_LIGHT;
+        cell.Format.Font = new Font { Name = FontHelper.Raleway.BLACK, Size = 14, Color = ColorHelper.Black };
+        cell.Shading.Color = ColorHelper.RedLight;
         cell.VerticalAlignment = VerticalAlignment.Center;
         cell.MergeRight = 2;
-        cell.Format.LeftIndent = EXPENSE_TABLE_LEFT_INDENT;
+        cell.Format.LeftIndent = ExpenseTableLeftIndent;
     }
 
-    private void AddExpenseAmountHeader(Cell cell)
+    private static void AddExpenseAmountHeader(Cell cell)
     {
-        cell.AddParagraph(ResourceReportGenerationMessages.AMOUNT);
-        cell.Format.Font = new Font { Name = FontHelper.Raleway.BLACK, Size = 14, Color = ColorHelper.WHITE };
-        cell.Shading.Color = ColorHelper.RED_DARK;
+        cell.AddParagraph(ResourceReportGenerationMessages.Amount);
+        cell.Format.Font = new Font { Name = FontHelper.Raleway.BLACK, Size = 14, Color = ColorHelper.White };
+        cell.Shading.Color = ColorHelper.RedDark;
         cell.VerticalAlignment = VerticalAlignment.Center;
     }
 
-    private void AddExpenseAmountValue(Cell cell, decimal value)
+    private static void AddExpenseAmountValue(Cell cell, decimal value)
     {
-        cell.AddParagraph($"-{value:#,##0.00} {CURRENCY_SYMBOL}");
-        cell.Format.Font = new Font { Name = FontHelper.WorkSans.REGULAR, Size = 12, Color = ColorHelper.BLACK };
-        cell.Shading.Color = ColorHelper.WHITE;
+        cell.AddParagraph($"-{value:#,##0.00} {CurrencySymbol}");
+        cell.Format.Font = new Font { Name = FontHelper.WorkSans.REGULAR, Size = 12, Color = ColorHelper.Black };
+        cell.Shading.Color = ColorHelper.White;
         cell.VerticalAlignment = VerticalAlignment.Center;
     }
 
-    private void AddExpenseDescriptionRow(Table table, string description)
+    private static void AddExpenseDescriptionRow(Table table, string description)
     {
         var row = table.AddRow();
-        row.Height = EXPENSE_TABLE_ROW_HEIGHT;
+        row.Height = ExpenseTableRowHeight;
         row.Cells[0].AddParagraph(description);
-        row.Cells[0].Format.Font = new Font { Name = FontHelper.WorkSans.REGULAR, Size = 10, Color = ColorHelper.BLACK };
-        row.Cells[0].Shading.Color = ColorHelper.GREEN_LIGHT;
+        row.Cells[0].Format.Font = new Font
+            { Name = FontHelper.WorkSans.REGULAR, Size = 10, Color = ColorHelper.Black };
+        row.Cells[0].Shading.Color = ColorHelper.GreenLight;
         row.Cells[0].VerticalAlignment = VerticalAlignment.Center;
-        row.Cells[0].Format.LeftIndent = EXPENSE_TABLE_LEFT_INDENT;
+        row.Cells[0].Format.LeftIndent = ExpenseTableLeftIndent;
         row.Cells[0].MergeRight = 2;
     }
 
-    private void AddWhiteSpace(Table table)
+    private static void AddWhiteSpace(Table table)
     {
         var row = table.AddRow();
         row.Height = 30;
         row.Borders.Visible = false;
     }
 
-    private void SetStyleBaseForExpenseInformation(Cell cell)
+    private static void SetStyleBaseForExpenseInformation(Cell cell)
     {
-        cell.Format.Font = new Font { Name = FontHelper.WorkSans.REGULAR, Size = 12, Color = ColorHelper.BLACK };
-        cell.Shading.Color = ColorHelper.GREEN_DARK;
+        cell.Format.Font = new Font { Name = FontHelper.WorkSans.REGULAR, Size = 12, Color = ColorHelper.Black };
+        cell.Shading.Color = ColorHelper.GreenDark;
         cell.VerticalAlignment = VerticalAlignment.Center;
     }
 
-    private byte[] DocumentToByteArray(Document document)
+    private static byte[] DocumentToByteArray(Document document)
     {
         var renderer = new PdfDocumentRenderer { Document = document };
         renderer.RenderDocument();

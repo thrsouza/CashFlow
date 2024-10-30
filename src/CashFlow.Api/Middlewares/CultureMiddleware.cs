@@ -16,9 +16,10 @@ public class CultureMiddleware(RequestDelegate next)
             && supportedLanguages.Exists(language => language.Name == requestedLanguage))
         {
             cultureInfo = new CultureInfo(requestedLanguage);
-            CultureInfo.CurrentCulture = cultureInfo;
-            CultureInfo.CurrentUICulture = cultureInfo;
         }
+        
+        CultureInfo.CurrentCulture = cultureInfo;
+        CultureInfo.CurrentUICulture = cultureInfo;
 
         await next(context);
     }

@@ -1,35 +1,24 @@
 ﻿using AutoMapper;
 using CashFlow.Communication.Responses;
 using CashFlow.Domain.Repositories.Expenses;
-using CashFlow.Domain.Repositories;
-using CashFlow.Domain.Entities;
-using CashFlow.Exeption.ExceptionsBase;
 using CashFlow.Exeption;
+using CashFlow.Exeption.ExceptionsBase;
 
-namespace CashFlow.Application.UseCases.Expenses.GetAll;
+namespace CashFlow.Application.UseCases.Expenses.GetById;
 
-public class GetByIdExpenseUseCase : IGetByIdExpenseUseCase
+public class GetByIdExpenseUseCase(
+    IExpensesReadOnlyRepository repository,
+    IMapper mapper) : IGetByIdExpenseUseCase
 {
-    private readonly IExpensesReadOnlyRepository _repository;
-    private readonly IMapper _mapper;
-
-    public GetByIdExpenseUseCase(
-        IExpensesReadOnlyRepository repository,
-        IMapper mapper)
-    {
-        this._repository = repository;
-        this._mapper = mapper;
-    }
-
     public async Task<ResponseExpenseJson> Execute(long id)
     {
-        var result = await this._repository.GetById(id);
+        var result = await repository.GetById(id);
 
         if (result is null)
         {
-            throw new CashFlowNotFoundException(ResourceErrorMessages.EXPENSE_NOT_FOUND);
+            throw new CashFlowNotFoundException(ResourceErrorMessages.ExpenseNotFound);
         }
 
-        return this._mapper.Map<ResponseExpenseJson>(result);
+        return mapper.Map<ResponseExpenseJson>(result);
     }
 }

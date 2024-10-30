@@ -1,5 +1,4 @@
 ﻿using CashFlow.Domain.Enums;
-using System.Reflection;
 
 namespace CashFlow.Domain.Entities;
 
@@ -11,7 +10,7 @@ public class Expense
     public DateTime Date { get; set; }
     public decimal Amount { get; set; }
     public PaymentType PaymentType { get; set; }
-    public DateTimeOffset CreatedDate { get; set; } = DateTimeOffset.UtcNow;
     public DateTimeOffset UpdatedDate { get; set; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset CreatedDate { get; set; } = DateTimeOffset.UtcNow;
 
 }

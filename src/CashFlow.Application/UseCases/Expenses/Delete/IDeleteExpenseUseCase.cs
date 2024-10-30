@@ -1,6 +1,4 @@
-﻿using CashFlow.Communication.Responses;
-
-namespace CashFlow.Application.UseCases.Expenses.Delete;
+﻿namespace CashFlow.Application.UseCases.Expenses.Delete;
 
 public interface IDeleteExpenseUseCase
 {

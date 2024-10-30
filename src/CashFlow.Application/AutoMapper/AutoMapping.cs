@@ -9,8 +9,8 @@ public class AutoMapping : Profile
 {
     public AutoMapping()
     {
-        this.RequestToEntity();
-        this.EntityToResponse();
+        RequestToEntity();
+        EntityToResponse();
     }
 
     private void RequestToEntity()

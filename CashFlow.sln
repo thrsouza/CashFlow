@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Application", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Communication", "src\CashFlow.Communication\CashFlow.Communication.csproj", "{F3E98A35-3508-4CFC-9481-4913BA6DF172}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Exeption", "src\CashFlow.Exeption\CashFlow.Exeption.csproj", "{FFAE1B14-67E7-4631-9E26-91713469315E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Exception", "src\CashFlow.Exception\CashFlow.Exception.csproj", "{FFAE1B14-67E7-4631-9E26-91713469315E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Infrastructure", "src\CashFlow.Infrastructure\CashFlow.Infrastructure.csproj", "{3BC431B5-495C-49C1-89BA-3EAB45508E08}"
 EndProject

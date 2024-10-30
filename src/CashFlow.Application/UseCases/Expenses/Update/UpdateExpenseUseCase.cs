@@ -2,8 +2,8 @@
 using CashFlow.Communication.Requests;
 using CashFlow.Domain.Repositories;
 using CashFlow.Domain.Repositories.Expenses;
-using CashFlow.Exeption;
-using CashFlow.Exeption.ExceptionsBase;
+using CashFlow.Exception;
+using CashFlow.Exception.ExceptionsBase;
 
 namespace CashFlow.Application.UseCases.Expenses.Update;
 public class UpdateExpenseUseCase(

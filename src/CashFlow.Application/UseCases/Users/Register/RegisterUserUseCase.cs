@@ -20,12 +20,12 @@ public class RegisterUserUseCase(
     IMapper mapper) 
     : IRegisterUserUseCase
 {
-    public async Task<ResponseRegisteredUserJson> Execute(RequestUserJson request)
+    public async Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserJson requestRegister)
     {
-        await Validate(request);
+        await Validate(requestRegister);
         
-        var entity = mapper.Map<User>(request);
-        entity.Password = passwordEncryptor.Encrypt(request.Password);
+        var entity = mapper.Map<User>(requestRegister);
+        entity.Password = passwordEncryptor.Encrypt(requestRegister.Password);
         entity.UserIdentifier = Guid.NewGuid();
 
         await usersWriteOnlyRepository.Add(entity);
@@ -39,11 +39,11 @@ public class RegisterUserUseCase(
         };
     }
 
-    private async Task Validate(RequestUserJson request)
+    private async Task Validate(RequestRegisterUserJson requestRegister)
     {
-        var result = await new RequestUserValidator().ValidateAsync(request);
+        var result = await new RequestRegisterUserValidator().ValidateAsync(requestRegister);
 
-        var emailAlreadyExists = await usersReadOnlyRepository.ExistActiveUserWithEmail(request.Email);
+        var emailAlreadyExists = await usersReadOnlyRepository.ExistActiveUserWithEmail(requestRegister.Email);
 
         if (emailAlreadyExists)
         {

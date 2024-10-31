@@ -4,9 +4,9 @@ using FluentValidation;
 
 namespace CashFlow.Application.UseCases.Expenses;
 
-public class RequestExpenseValidator : AbstractValidator<RequestExpenseJson>
+public class RegisterExpenseValidator : AbstractValidator<RequestExpenseJson>
 {
-    public RequestExpenseValidator()
+    public RegisterExpenseValidator()
     {
         RuleFor(request => request.Title).NotEmpty().WithMessage(ResourceErrorMessages.TitleIsRequired);
         RuleFor(request => request.Amount).GreaterThan(0).WithMessage(ResourceErrorMessages.AmountMustBeGreaterThanZero);

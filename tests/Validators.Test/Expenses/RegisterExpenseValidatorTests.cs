@@ -6,14 +6,14 @@ using FluentAssertions;
 
 namespace Validators.Test.Expenses;
 
-public class RequestExpenseValidatorTests
+public class RegisterExpenseValidatorTests
 {
     [Fact]
     public void Success()
     {
         // Arrange
-        var validator = new RequestExpenseValidator();
-        var request = RequestRegisterExpenseJsonBuilder.Build();
+        var validator = new RegisterExpenseValidator();
+        var request = RequestExpenseJsonBuilder.Build();
 
         // Act
         var result = validator.Validate(request);
@@ -30,8 +30,8 @@ public class RequestExpenseValidatorTests
     public void Error_Title_Empty(string title)
     {
         // Arrange
-        var validator = new RequestExpenseValidator();
-        var request = RequestRegisterExpenseJsonBuilder.Build();
+        var validator = new RegisterExpenseValidator();
+        var request = RequestExpenseJsonBuilder.Build();
         request.Title = title;
 
         // Act
@@ -47,8 +47,8 @@ public class RequestExpenseValidatorTests
     public void Error_Date_Future()
     {
         // Arrange
-        var validator = new RequestExpenseValidator();
-        var request = RequestRegisterExpenseJsonBuilder.Build();
+        var validator = new RegisterExpenseValidator();
+        var request = RequestExpenseJsonBuilder.Build();
         request.Date = DateTime.UtcNow.AddDays(1);
 
         // Act
@@ -64,8 +64,8 @@ public class RequestExpenseValidatorTests
     public void Error_PaymentType_Invalid()
     {
         // Arrange
-        var validator = new RequestExpenseValidator();
-        var request = RequestRegisterExpenseJsonBuilder.Build();
+        var validator = new RegisterExpenseValidator();
+        var request = RequestExpenseJsonBuilder.Build();
         request.PaymentType = (PaymentType)999;
 
         // Act
@@ -84,8 +84,8 @@ public class RequestExpenseValidatorTests
     public void Error_Amount_GreaterThanZero(decimal amount)
     {
         // Arrange
-        var validator = new RequestExpenseValidator();
-        var request = RequestRegisterExpenseJsonBuilder.Build();
+        var validator = new RegisterExpenseValidator();
+        var request = RequestExpenseJsonBuilder.Build();
         request.Amount = amount;
 
         // Act

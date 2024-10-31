@@ -5,5 +5,5 @@ namespace CashFlow.Application.UseCases.Users.Register;
 
 public interface IRegisterUserUseCase
 {
-    Task<ResponseRegisteredUserJson> Execute(RequestUserJson request);
+    Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserJson requestRegister);
 }

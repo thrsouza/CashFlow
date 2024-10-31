@@ -32,7 +32,7 @@ public class UpdateExpenseUseCase(
 
     private static void Validate(RequestExpenseJson request)
     {
-        var validator = new RequestExpenseValidator();
+        var validator = new RegisterExpenseValidator();
 
         var result = validator.Validate(request);
 

@@ -12,7 +12,7 @@ public class SignInUseCase(
     IAccessTokenGenerator accessTokenGenerator)
     : ISignInUseCase
 {
-    public async Task<ResponseRegisteredUserJson> Execute(RequestAuthorizationJson request)
+    public async Task<ResponseRegisteredUserJson> Execute(RequestSignInJson request)
     {
         var user = await repository.GetByEmail(request.Email);
 

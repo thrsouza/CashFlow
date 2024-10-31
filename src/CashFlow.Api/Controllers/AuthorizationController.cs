@@ -14,7 +14,7 @@ public class AuthorizationController : ControllerBase
     [ProducesResponseType<ResponseErrorJson>(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> SignIn(
         [FromServices] ISignInUseCase useCase,
-        [FromBody] RequestAuthorizationJson request)
+        [FromBody] RequestSignInJson request)
     {
         var response = await useCase.Execute(request);
         

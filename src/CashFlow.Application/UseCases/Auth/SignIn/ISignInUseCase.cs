@@ -5,5 +5,5 @@ namespace CashFlow.Application.UseCases.Auth.SignIn;
 
 public interface ISignInUseCase
 {
-    Task<ResponseRegisteredUserJson> Execute(RequestAuthorizationJson request);
+    Task<ResponseRegisteredUserJson> Execute(RequestSignInJson request);
 }

@@ -17,11 +17,15 @@ public static class InfrastructureServiceCollectionExtensions
 {
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        AddDbContext(services, configuration);
+        services.AddScoped<IPasswordEncryptor, PasswordEncryptor>();
+        
         AddRepositories(services);
         AddAccessTokenGenerator(services, configuration);
-        
-        services.AddScoped<IPasswordEncryptor, PasswordEncryptor>();
+
+        if (!configuration.IsTestEnvironment())
+        {
+            AddDbContext(services, configuration);
+        }
     }
 
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)

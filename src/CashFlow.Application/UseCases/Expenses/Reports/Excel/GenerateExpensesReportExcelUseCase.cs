@@ -2,11 +2,14 @@
 using CashFlow.Domain.Extensions;
 using CashFlow.Domain.Reports;
 using CashFlow.Domain.Repositories.Expenses;
+using CashFlow.Domain.Services.AuthenticatedUser;
 using ClosedXML.Excel;
 
 namespace CashFlow.Application.UseCases.Expenses.Reports.Excel;
 
-internal class GenerateExpensesReportExcelUseCase(IExpensesReadOnlyRepository repository)
+internal class GenerateExpensesReportExcelUseCase(
+    IAuthenticatedUserService authenticatedUserService,
+    IExpensesReadOnlyRepository repository)
     : IGenerateExpensesReportExcelUseCase
 {
     private const string CurrencySymbol = "$";
@@ -17,7 +20,9 @@ internal class GenerateExpensesReportExcelUseCase(IExpensesReadOnlyRepository re
         var startDate = new DateTime(year: date.Year, month: date.Month, day: 1).Date;
         var endDate = new DateTime(year: date.Year, month: date.Month, day: daysInMonth, hour: 23, minute: 59, second: 59);
 
-        var expenses = await repository.GetAllByDate(startDate, endDate);
+        var authenticatedUser = await authenticatedUserService.Get();
+        
+        var expenses = await repository.GetAllByDate(startDate, endDate, authenticatedUser);
 
         return expenses.Count == 0 ? [] : CreateReport(date: date, expenses: expenses);
     }

@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
-using CashFlow.Communication.Responses;
-using CashFlow.Domain.Repositories.Expenses;
-using CashFlow.Exception.ExceptionsBase;
-using CashFlow.Exception;
 using CashFlow.Domain.Repositories;
+using CashFlow.Domain.Repositories.Expenses;
+using CashFlow.Domain.Services.AuthenticatedUser;
+using CashFlow.Exception.ExceptionsBase;
 
 namespace CashFlow.Application.UseCases.Expenses.Delete;
 
 public class DeleteExpenseUseCase(
-    IExpensesWriteOnlyRepository repository,
+    IAuthenticatedUserService authenticatedUserService,
+    IExpensesReadOnlyRepository expensesReadOnlyRepository,
+    IExpensesWriteOnlyRepository expensesWriteOnlyRepository,
     IUnitOfWork unitOfWork,
     IMapper mapper)
     : IDeleteExpenseUseCase
@@ -17,9 +18,13 @@ public class DeleteExpenseUseCase(
 
     public async Task Execute(long id)
     {
-        var result = await repository.Delete(id);
+        var authenticatedUser = await authenticatedUserService.Get();
 
-        if (!result) throw new CashFlowNotFoundException();
+        var result = await expensesReadOnlyRepository.GetById(id, authenticatedUser);
+        
+        if (result is null) throw new CashFlowNotFoundException();
+        
+        await expensesWriteOnlyRepository.Delete(id);
         
         await unitOfWork.Commit();
     }

@@ -1,4 +1,4 @@
-using CashFlow.Domain.Security;
+using CashFlow.Domain.Security.Cryptography;
 using Moq;
 
 namespace CommonTestUtilities.Security;

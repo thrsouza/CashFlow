@@ -1,7 +1,9 @@
 using System.Text;
 using CashFlow.Api.Filters;
 using CashFlow.Api.Middlewares;
+using CashFlow.Api.Providers;
 using CashFlow.Application;
+using CashFlow.Domain.Security.AccessToken;
 using CashFlow.Infrastructure;
 using CashFlow.Infrastructure.Migrations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -51,6 +53,10 @@ builder.Services.Configure<RouteOptions>(options =>
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddScoped<IAccessTokenProvider, AccessTokenProvider>();
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAuthentication(config =>
 {

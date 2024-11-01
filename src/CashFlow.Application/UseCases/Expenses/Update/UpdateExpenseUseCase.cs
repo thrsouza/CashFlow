@@ -2,11 +2,13 @@
 using CashFlow.Communication.Requests;
 using CashFlow.Domain.Repositories;
 using CashFlow.Domain.Repositories.Expenses;
+using CashFlow.Domain.Services.AuthenticatedUser;
 using CashFlow.Exception;
 using CashFlow.Exception.ExceptionsBase;
 
 namespace CashFlow.Application.UseCases.Expenses.Update;
 public class UpdateExpenseUseCase(
+    IAuthenticatedUserService authenticatedUserService,
     IExpensesUpdateOnlyRepository repository,
     IUnitOfWork unitOfWork,
     IMapper mapper)
@@ -15,17 +17,19 @@ public class UpdateExpenseUseCase(
     public async Task Execute(long id, RequestExpenseJson request)
     {
         Validate(request);
+        
+        var authenticatedUser = await authenticatedUserService.Get();
 
-        var entity = await repository.GetById(id);
+        var expense = await repository.GetById(id, authenticatedUser);
 
-        if (entity is null)
+        if (expense is null)
         {
             throw new CashFlowNotFoundException();
         }
 
-        mapper.Map(request, entity);
+        mapper.Map(request, expense);
 
-        repository.Update(entity);
+        repository.Update(expense);
 
         await unitOfWork.Commit();
     }

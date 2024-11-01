@@ -4,11 +4,13 @@ using CashFlow.Communication.Responses;
 using CashFlow.Domain.Entities;
 using CashFlow.Domain.Repositories;
 using CashFlow.Domain.Repositories.Expenses;
+using CashFlow.Domain.Services.AuthenticatedUser;
 using CashFlow.Exception.ExceptionsBase;
 
 namespace CashFlow.Application.UseCases.Expenses.Register;
 
 public class RegisterExpenseUseCase(
+    IAuthenticatedUserService authenticatedUserService,
     IExpensesWriteOnlyRepository repository,
     IUnitOfWork unitOfWork,
     IMapper mapper)
@@ -17,15 +19,17 @@ public class RegisterExpenseUseCase(
     public async Task<ResponseRegisteredExpenseJson> Execute(RequestExpenseJson request)
     {
         Validate(request);
+        
+        var authenticatedUser = await authenticatedUserService.Get();
 
-        var entity = mapper.Map<Expense>(request);
-        entity.UserId = 1;
+        var expense = mapper.Map<Expense>(request);
+        expense.UserId = authenticatedUser.Id;
 
-        await repository.Add(entity);
+        await repository.Add(expense);
 
         await unitOfWork.Commit();
 
-        var response = mapper.Map<ResponseRegisteredExpenseJson>(entity);
+        var response = mapper.Map<ResponseRegisteredExpenseJson>(expense);
 
         return response;
     }

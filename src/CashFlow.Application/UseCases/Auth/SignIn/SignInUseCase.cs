@@ -1,7 +1,8 @@
 using CashFlow.Communication.Requests;
 using CashFlow.Communication.Responses;
 using CashFlow.Domain.Repositories.Users;
-using CashFlow.Domain.Security;
+using CashFlow.Domain.Security.AccessToken;
+using CashFlow.Domain.Security.Cryptography;
 using CashFlow.Exception.ExceptionsBase;
 
 namespace CashFlow.Application.UseCases.Auth.SignIn;

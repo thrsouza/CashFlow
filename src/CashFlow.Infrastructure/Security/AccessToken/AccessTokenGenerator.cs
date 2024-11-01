@@ -2,10 +2,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using CashFlow.Domain.Entities;
-using CashFlow.Domain.Security;
+using CashFlow.Domain.Security.AccessToken;
 using Microsoft.IdentityModel.Tokens;
 
-namespace CashFlow.Infrastructure.Security;
+namespace CashFlow.Infrastructure.Security.AccessToken;
 
 public class AccessTokenGenerator(uint expirationInMinutes, string secret) 
     : IAccessTokenGenerator
@@ -17,8 +17,7 @@ public class AccessTokenGenerator(uint expirationInMinutes, string secret)
             Expires = DateTime.UtcNow.AddMinutes(expirationInMinutes),
             Subject = new ClaimsIdentity(new[]
             {
-                new Claim("name", user.Name),
-                new Claim("sid", user.UserIdentifier.ToString()),
+                new Claim(ClaimTypes.Sid, user.UserIdentifier.ToString()),
             }),
             SigningCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),

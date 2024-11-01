@@ -5,13 +5,16 @@ using CashFlow.Domain.Entities;
 using CashFlow.Domain.Extensions;
 using CashFlow.Domain.Reports;
 using CashFlow.Domain.Repositories.Expenses;
+using CashFlow.Domain.Services.AuthenticatedUser;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
 
 namespace CashFlow.Application.UseCases.Expenses.Reports.Pdf;
 
-public class GenerateExpensesReportPdfUseCase(IExpensesReadOnlyRepository repository)
+public class GenerateExpensesReportPdfUseCase(
+    IAuthenticatedUserService authenticatedUserService,
+    IExpensesReadOnlyRepository repository)
     : IGenerateExpensesReportPdfUseCase
 {
     private const string CurrencySymbol = "$";
@@ -23,8 +26,10 @@ public class GenerateExpensesReportPdfUseCase(IExpensesReadOnlyRepository reposi
         var daysInMonth = DateTime.DaysInMonth(year: date.Year, month: date.Month);
         var startDate = new DateTime(year: date.Year, month: date.Month, day: 1).Date;
         var endDate = new DateTime(year: date.Year, month: date.Month, day: daysInMonth, hour: 23, minute: 59, second: 59);
+        
+        var authenticatedUser = await authenticatedUserService.Get();
 
-        var expenses = await repository.GetAllByDate(startDate, endDate);
+        var expenses = await repository.GetAllByDate(startDate, endDate, authenticatedUser);
 
         return expenses.Count == 0 ? [] : CreateReport(date: date, expenses: expenses);
     }

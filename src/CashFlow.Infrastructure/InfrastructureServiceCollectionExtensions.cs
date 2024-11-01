@@ -1,12 +1,16 @@
 ﻿using CashFlow.Domain.Repositories;
 using CashFlow.Domain.Repositories.Expenses;
 using CashFlow.Domain.Repositories.Users;
-using CashFlow.Domain.Security;
+using CashFlow.Domain.Security.AccessToken;
+using CashFlow.Domain.Security.Cryptography;
+using CashFlow.Domain.Services.AuthenticatedUser;
 using CashFlow.Infrastructure.DataAccess;
 using CashFlow.Infrastructure.DataAccess.Repositories;
 using CashFlow.Infrastructure.DataAccess.Repositories.Expenses;
 using CashFlow.Infrastructure.DataAccess.Repositories.Users;
-using CashFlow.Infrastructure.Security;
+using CashFlow.Infrastructure.Security.AccessToken;
+using CashFlow.Infrastructure.Security.Cryptography;
+using CashFlow.Infrastructure.Services.AuthenticatedUser;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +22,7 @@ public static class InfrastructureServiceCollectionExtensions
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IPasswordEncryptor, PasswordEncryptor>();
+        services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
         
         AddRepositories(services);
         AddAccessTokenGenerator(services, configuration);

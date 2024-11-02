@@ -18,6 +18,7 @@ public class AccessTokenGenerator(uint expirationInMinutes, string secret)
             Subject = new ClaimsIdentity(new[]
             {
                 new Claim(ClaimTypes.Sid, user.UserIdentifier.ToString()),
+                new Claim(ClaimTypes.Role, user.Role)
             }),
             SigningCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),

@@ -24,14 +24,14 @@ internal class GenerateExpensesReportExcelUseCase(
         
         var expenses = await repository.GetAllByDate(startDate, endDate, authenticatedUser);
 
-        return expenses.Count == 0 ? [] : CreateReport(date: date, expenses: expenses);
+        return expenses.Count == 0 ? [] : CreateReport(user: authenticatedUser, date: date, expenses: expenses);
     }
 
-    private byte[] CreateReport(DateOnly date, IList<Expense> expenses)
+    private byte[] CreateReport(User user, DateOnly date, IList<Expense> expenses)
     {
         using var workbook = new XLWorkbook();
 
-        workbook.Author = "Thiago Souza";
+        workbook.Author = user.Name;
         workbook.Style.Font.FontSize = 10;
         workbook.Style.Font.FontName = "Calibri";
 

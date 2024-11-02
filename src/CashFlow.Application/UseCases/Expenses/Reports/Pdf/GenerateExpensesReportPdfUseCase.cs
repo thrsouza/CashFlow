@@ -31,23 +31,23 @@ public class GenerateExpensesReportPdfUseCase(
 
         var expenses = await repository.GetAllByDate(startDate, endDate, authenticatedUser);
 
-        return expenses.Count == 0 ? [] : CreateReport(date: date, expenses: expenses);
+        return expenses.Count == 0 ? [] : CreateReport(user: authenticatedUser, date: date, expenses: expenses);
     }
 
-    private byte[] CreateReport(DateOnly date, IList<Expense> expenses)
+    private byte[] CreateReport(User user, DateOnly date, IList<Expense> expenses)
     {
         var title = string.Format(ResourceReportGenerationMessages.ExpensesFor, date.ToString("Y"));
 
         var document = new Document
         {
-            Info = { Title = title, Author = "Thiago Souza" }
+            Info = { Title = title, Author = user.Name }
         };
 
         var style = document.Styles["Normal"]!;
         style.Font.Name = FontHelper.Raleway.REGULAR;
 
         var page = CreatePage(document);
-        CreateHeaderWithProfilePhotoAndName(page);
+        CreateHeaderWithProfilePhotoAndName(page, name: user.Name);
         CreateTotalSpentSection(page, date, expenses.Sum(expense => expense.Amount));
 
         foreach (var expense in expenses)
@@ -102,7 +102,7 @@ public class GenerateExpensesReportPdfUseCase(
         return section;
     }
 
-    private static void CreateHeaderWithProfilePhotoAndName(Section page)
+    private static void CreateHeaderWithProfilePhotoAndName(Section page, string name)
     {
         var header = page.AddTable();
         header.AddColumn();
@@ -116,7 +116,7 @@ public class GenerateExpensesReportPdfUseCase(
         var logo = headerRow.Cells[0].AddImage(Path.Combine(dirName, "Images", "Logo.png"));
         logo.Width = new Unit(56, UnitType.Point);
 
-        headerRow.Cells[1].AddParagraph(string.Format(ResourceReportGenerationMessages.Hello, "Thiago Souza"));
+        headerRow.Cells[1].AddParagraph(string.Format(ResourceReportGenerationMessages.Hello, name));
         headerRow.Cells[1].Format.Font = new Font { Name = FontHelper.Raleway.BLACK, Size = 16 };
         headerRow.Cells[1].VerticalAlignment = VerticalAlignment.Center;
         headerRow.Cells[1].Format.LeftIndent = 8;

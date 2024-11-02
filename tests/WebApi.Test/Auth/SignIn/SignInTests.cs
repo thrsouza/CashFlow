@@ -6,11 +6,8 @@ using FluentAssertions;
 
 namespace WebApi.Test.Auth.SignIn;
 
-public class SignInTests(CashFlowWebApplicationFactory webApplicationFactory)
-    : IClassFixture<CashFlowWebApplicationFactory>
+public class SignInTests(CashFlowWebApplicationFactory webApplicationFactory) : CashFlowClassFixture(webApplicationFactory)
 {
-    private readonly HttpClient _httpClient = webApplicationFactory.CreateClient();
-    
     private readonly string _name = webApplicationFactory.GetName();
     private readonly string _email = webApplicationFactory.GetEmail();
     private readonly string _password = webApplicationFactory.GetPassword();
@@ -22,7 +19,7 @@ public class SignInTests(CashFlowWebApplicationFactory webApplicationFactory)
     {
         var request = new RequestSignInJson { Email = _email, Password = _password };
 
-        var response = await _httpClient.PostAsJsonAsync(Uri, request);
+        var response = await PostAsJsonAsync(requestUri: Uri, request: request);
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 

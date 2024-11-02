@@ -13,14 +13,20 @@ namespace WebApi.Test;
 
 public class CashFlowWebApplicationFactory : WebApplicationFactory<Program>
 {
-    private User? _user;
-    private string? _password;
-    private string? _token;
+    private readonly User _user;
+    private readonly string _password;
+    private string _token = null!;
+
+    public CashFlowWebApplicationFactory()
+    {
+        _user = UserBuilder.Build();
+        _password = _user.Password;
+    }
     
-    public string GetName() => _user!.Name;
-    public string GetEmail() => _user!.Email;
-    public string GetPassword() => _password!;
-    public string GetToken() => _token!;
+    public string GetName() => _user.Name;
+    public string GetEmail() => _user.Email;
+    public string GetPassword() => _password;
+    public string GetToken() => _token;
     
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
@@ -39,22 +45,15 @@ public class CashFlowWebApplicationFactory : WebApplicationFactory<Program>
                 var dbContext = scope.ServiceProvider.GetRequiredService<CashFlowDbContext>();
                 var passwordEncryptor = scope.ServiceProvider.GetRequiredService<IPasswordEncryptor>();
                 
-                StartDatabase(dbContext, passwordEncryptor);
+                // Create user for tests
+                _user.Password = passwordEncryptor.Encrypt(_user.Password);
+                dbContext.Users.Add(_user);
+                dbContext.SaveChanges();
                 
+                // Generate token for integration tests
                 var accessTokenGenerator = scope.ServiceProvider.GetRequiredService<IAccessTokenGenerator>();
                 _token = accessTokenGenerator.Generate(_user!);
             });
     }
 
-    private void StartDatabase(CashFlowDbContext dbContext, IPasswordEncryptor passwordEncryptor)
-    {
-        _user = UserBuilder.Build();
-        _password = _user.Password;
-        
-        _user.Password = passwordEncryptor.Encrypt(_user.Password);
-        
-        dbContext.Users.Add(_user);
-
-        dbContext.SaveChanges();
-    }
 }

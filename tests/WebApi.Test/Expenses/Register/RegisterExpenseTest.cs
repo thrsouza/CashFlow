@@ -1,7 +1,5 @@
 using System.Globalization;
 using System.Net;
-using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Text.Json;
 using CashFlow.Exception;
 using CommonTestUtilities.Requests;
@@ -10,10 +8,9 @@ using WebApi.Test.InlineData;
 
 namespace WebApi.Test.Expenses.Register;
 
-public class RegisterExpenseTest(CashFlowWebApplicationFactory webApplicationFactory) : IClassFixture<CashFlowWebApplicationFactory>
+public class RegisterExpenseTest(CashFlowWebApplicationFactory webApplicationFactory) : CashFlowClassFixture(webApplicationFactory)
 {
-    private readonly HttpClient _httpClient = webApplicationFactory.CreateClient();
-    
+    private readonly CashFlowWebApplicationFactory _webApplicationFactory = webApplicationFactory;
     private const string Uri = "/api/expenses";
 
     [Fact]
@@ -21,9 +18,7 @@ public class RegisterExpenseTest(CashFlowWebApplicationFactory webApplicationFac
     {
         var request = RequestRegisterExpenseJsonBuilder.Build();
         
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", webApplicationFactory.GetToken());
-
-        var response = await _httpClient.PostAsJsonAsync(Uri, request);
+        var response = await PostAsJsonAsync(requestUri: Uri, request: request, token: _webApplicationFactory.GetToken());
 
         response.StatusCode.Should().Be(HttpStatusCode.Created);
 
@@ -41,10 +36,7 @@ public class RegisterExpenseTest(CashFlowWebApplicationFactory webApplicationFac
         var request = RequestRegisterExpenseJsonBuilder.Build();
         request.Title = string.Empty;
         
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", webApplicationFactory.GetToken());
-        _httpClient.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(culture));
-        
-        var response = await _httpClient.PostAsJsonAsync(Uri, request);
+        var response = await PostAsJsonAsync(requestUri: Uri, request: request, token: _webApplicationFactory.GetToken(), culture: culture);
         
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         

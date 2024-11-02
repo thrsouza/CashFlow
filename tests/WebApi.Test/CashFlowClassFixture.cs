@@ -8,12 +8,20 @@ public class CashFlowClassFixture(CashFlowWebApplicationFactory webApplicationFa
 {
     private readonly HttpClient _httpClient = webApplicationFactory.CreateClient();
 
-    protected async Task<HttpResponseMessage> PostAsJsonAsync(string requestUri, object request, string token = "", string culture = "en")
+    protected async Task<HttpResponseMessage> DoPostAsync(string requestUri, object request, string token = "", string culture = "en")
     {
         SetAuthorizationToken(token);
         SetCulture(culture);
         
         return await _httpClient.PostAsJsonAsync(requestUri, request);
+    }
+    
+    protected async Task<HttpResponseMessage> DoGetAsync(string requestUri, string token = "", string culture = "en")
+    {
+        SetAuthorizationToken(token);
+        SetCulture(culture);
+        
+        return await _httpClient.GetAsync(requestUri);
     }
 
     private void SetAuthorizationToken(string token)

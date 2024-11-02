@@ -45,15 +45,31 @@ public class CashFlowWebApplicationFactory : WebApplicationFactory<Program>
                 var dbContext = scope.ServiceProvider.GetRequiredService<CashFlowDbContext>();
                 var passwordEncryptor = scope.ServiceProvider.GetRequiredService<IPasswordEncryptor>();
                 
-                // Create user for tests
-                _user.Password = passwordEncryptor.Encrypt(_user.Password);
-                dbContext.Users.Add(_user);
-                dbContext.SaveChanges();
+                StartDatabase(dbContext, passwordEncryptor);
                 
                 // Generate token for integration tests
                 var accessTokenGenerator = scope.ServiceProvider.GetRequiredService<IAccessTokenGenerator>();
-                _token = accessTokenGenerator.Generate(_user!);
+                _token = accessTokenGenerator.Generate(_user);
             });
     }
 
+    private void StartDatabase(CashFlowDbContext dbContext, IPasswordEncryptor passwordEncryptor)
+    {
+        AddUsers(dbContext, passwordEncryptor);
+        AddExpenses(dbContext, _user);
+    }
+
+    private void AddUsers(CashFlowDbContext dbContext, IPasswordEncryptor passwordEncryptor)
+    {
+        _user.Password = passwordEncryptor.Encrypt(_user.Password);
+        dbContext.Users.Add(_user);
+        dbContext.SaveChanges();
+    }
+    
+    private void AddExpenses(CashFlowDbContext context, User user)
+    {
+        var expenses = ExpenseBuilder.Build(user);
+        context.Expenses.AddRange(expenses);
+        context.SaveChanges();
+    }
 }

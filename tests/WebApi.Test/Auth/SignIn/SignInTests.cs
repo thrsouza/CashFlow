@@ -19,7 +19,7 @@ public class SignInTests(CashFlowWebApplicationFactory webApplicationFactory) : 
     {
         var request = new RequestSignInJson { Email = _email, Password = _password };
 
-        var response = await PostAsJsonAsync(requestUri: Uri, request: request);
+        var response = await DoPostAsync(requestUri: Uri, request: request);
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 

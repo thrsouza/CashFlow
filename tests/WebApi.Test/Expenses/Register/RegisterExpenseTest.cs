@@ -18,7 +18,7 @@ public class RegisterExpenseTest(CashFlowWebApplicationFactory webApplicationFac
     {
         var request = RequestRegisterExpenseJsonBuilder.Build();
         
-        var response = await PostAsJsonAsync(requestUri: Uri, request: request, token: _webApplicationFactory.GetToken());
+        var response = await DoPostAsync(requestUri: Uri, request: request, token: _webApplicationFactory.GetToken());
 
         response.StatusCode.Should().Be(HttpStatusCode.Created);
 
@@ -36,7 +36,7 @@ public class RegisterExpenseTest(CashFlowWebApplicationFactory webApplicationFac
         var request = RequestRegisterExpenseJsonBuilder.Build();
         request.Title = string.Empty;
         
-        var response = await PostAsJsonAsync(requestUri: Uri, request: request, token: _webApplicationFactory.GetToken(), culture: culture);
+        var response = await DoPostAsync(requestUri: Uri, request: request, token: _webApplicationFactory.GetToken(), culture: culture);
         
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         

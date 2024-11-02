@@ -10,14 +10,14 @@ namespace WebApi.Test.Users.Register;
 
 public class RegisterUserTest(CashFlowWebApplicationFactory webApplicationFactory) : CashFlowClassFixture(webApplicationFactory)
 {
-    private const string Uri = "/api/user";
+    private const string Uri = "/api/users";
     
     [Fact]
     public async Task Success()
     {
         var request = RequestRegisterUserJsonBuilder.Build();
         
-        var response = await PostAsJsonAsync(requestUri: Uri, request: request);
+        var response = await DoPostAsync(requestUri: Uri, request: request);
         
         response.StatusCode.Should().Be(HttpStatusCode.Created);
         
@@ -36,7 +36,7 @@ public class RegisterUserTest(CashFlowWebApplicationFactory webApplicationFactor
         var request = RequestRegisterUserJsonBuilder.Build();
         request.Name = string.Empty;
         
-        var response = await PostAsJsonAsync(requestUri: Uri, request: request, culture: culture);
+        var response = await DoPostAsync(requestUri: Uri, request: request, culture: culture);
         
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         

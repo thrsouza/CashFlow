@@ -15,6 +15,16 @@ public class ExpensesReadOnlyRepositoryBuilder
         return this;
     }
     
+    public ExpensesReadOnlyRepositoryBuilder GetById(User user, Expense? expense)
+    {
+        if (expense is not null)
+        {
+            _repository.Setup(x => x.GetById(expense.Id, user)).ReturnsAsync(expense);
+        }
+        
+        return this;
+    }
+    
     public IExpensesReadOnlyRepository Build()
     {
         return _repository.Object;

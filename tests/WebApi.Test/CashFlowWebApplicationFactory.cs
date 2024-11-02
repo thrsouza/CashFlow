@@ -14,6 +14,8 @@ namespace WebApi.Test;
 public class CashFlowWebApplicationFactory : WebApplicationFactory<Program>
 {
     private readonly User _user;
+    private readonly Expense _expense;
+    
     private readonly string _password;
     private string _token = null!;
 
@@ -21,12 +23,15 @@ public class CashFlowWebApplicationFactory : WebApplicationFactory<Program>
     {
         _user = UserBuilder.Build();
         _password = _user.Password;
+        
+        _expense = ExpenseBuilder.Build(_user);
     }
     
     public string GetName() => _user.Name;
     public string GetEmail() => _user.Email;
     public string GetPassword() => _password;
     public string GetToken() => _token;
+    public long GetExpenseId() => _expense.Id;
     
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
@@ -56,7 +61,7 @@ public class CashFlowWebApplicationFactory : WebApplicationFactory<Program>
     private void StartDatabase(CashFlowDbContext dbContext, IPasswordEncryptor passwordEncryptor)
     {
         AddUsers(dbContext, passwordEncryptor);
-        AddExpenses(dbContext, _user);
+        AddExpenses(dbContext);
     }
 
     private void AddUsers(CashFlowDbContext dbContext, IPasswordEncryptor passwordEncryptor)
@@ -66,10 +71,9 @@ public class CashFlowWebApplicationFactory : WebApplicationFactory<Program>
         dbContext.SaveChanges();
     }
     
-    private void AddExpenses(CashFlowDbContext context, User user)
+    private void AddExpenses(CashFlowDbContext context)
     {
-        var expenses = ExpenseBuilder.Build(user);
-        context.Expenses.AddRange(expenses);
+        context.Expenses.Add(_expense);
         context.SaveChanges();
     }
 }

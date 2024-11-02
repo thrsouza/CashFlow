@@ -4,7 +4,7 @@ using FluentAssertions;
 
 namespace WebApi.Test.Expenses.GetAll;
 
-public class GetAllExpenseTest(CashFlowWebApplicationFactory webApplicationFactory) : CashFlowClassFixture(webApplicationFactory)
+public class GetAllExpenseTests(CashFlowWebApplicationFactory webApplicationFactory) : CashFlowClassFixture(webApplicationFactory)
 {
     private readonly CashFlowWebApplicationFactory _webApplicationFactory = webApplicationFactory;
     private const string Uri = "/api/expenses";

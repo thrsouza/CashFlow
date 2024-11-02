@@ -3,13 +3,12 @@ using CashFlow.Domain.Entities;
 using CommonTestUtilities.Entities;
 using CommonTestUtilities.Mapper;
 using CommonTestUtilities.Repositories;
-using CommonTestUtilities.Requests;
 using CommonTestUtilities.Services;
 using FluentAssertions;
 
 namespace UseCases.Test.Expenses.GetAll;
 
-public class GetAllExpenseUseCaseTest
+public class GetAllExpenseUseCaseTests
 {
     [Fact]
     public async Task Success()

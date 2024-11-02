@@ -8,7 +8,7 @@ using WebApi.Test.InlineData;
 
 namespace WebApi.Test.Users.Register;
 
-public class RegisterUserTest(CashFlowWebApplicationFactory webApplicationFactory) : CashFlowClassFixture(webApplicationFactory)
+public class RegisterUserTests(CashFlowWebApplicationFactory webApplicationFactory) : CashFlowClassFixture(webApplicationFactory)
 {
     private const string Uri = "/api/users";
     

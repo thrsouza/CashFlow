@@ -11,7 +11,7 @@ using FluentAssertions;
 
 namespace UseCases.Test.Expenses.Register;
 
-public class RegisterExpenseUseCaseTest
+public class RegisterExpenseUseCaseTests
 {
     [Fact]
     public async Task Success()

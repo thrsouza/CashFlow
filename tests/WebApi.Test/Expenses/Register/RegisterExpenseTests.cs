@@ -8,7 +8,7 @@ using WebApi.Test.InlineData;
 
 namespace WebApi.Test.Expenses.Register;
 
-public class RegisterExpenseTest(CashFlowWebApplicationFactory webApplicationFactory) : CashFlowClassFixture(webApplicationFactory)
+public class RegisterExpenseTests(CashFlowWebApplicationFactory webApplicationFactory) : CashFlowClassFixture(webApplicationFactory)
 {
     private readonly CashFlowWebApplicationFactory _webApplicationFactory = webApplicationFactory;
     private const string Uri = "/api/expenses";

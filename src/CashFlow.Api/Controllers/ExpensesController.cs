@@ -45,9 +45,9 @@ public class ExpensesController : ControllerBase
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Register(
         [FromServices] IRegisterExpenseUseCase useCase,
-        [FromBody] RequestExpenseJson request)
+        [FromBody] RequestRegisterExpenseJson requestRegister)
     {
-        var response = await useCase.Execute(request);
+        var response = await useCase.Execute(requestRegister);
 
         return Created(string.Empty, response);
     }
@@ -61,9 +61,9 @@ public class ExpensesController : ControllerBase
     public async Task<IActionResult> Update(
         [FromServices] IUpdateExpenseUseCase useCase, 
         [FromRoute] long id,
-        [FromBody] RequestExpenseJson request)
+        [FromBody] RequestRegisterExpenseJson requestRegister)
     {
-        await useCase.Execute(id, request);
+        await useCase.Execute(id, requestRegister);
 
         return NoContent();
     }

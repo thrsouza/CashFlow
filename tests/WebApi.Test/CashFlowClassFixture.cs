@@ -23,6 +23,15 @@ public class CashFlowClassFixture(CashFlowWebApplicationFactory webApplicationFa
         
         return await _httpClient.GetAsync(requestUri);
     }
+    
+    protected async Task<HttpResponseMessage> DoDeleteAsync(string requestUri, string token = "", string culture = "en")
+    {
+        SetAuthorizationToken(token);
+        SetCulture(culture);
+        
+        return await _httpClient.DeleteAsync(requestUri);
+    }
+    
 
     private void SetAuthorizationToken(string token)
     {

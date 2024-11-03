@@ -64,7 +64,7 @@ public class SignInUseCaseTests
         var result = await act.Should().ThrowAsync<CashFlowInvalidLoginException>();
     }
     
-    private static SignInUseCase CreateUseCase(User user, string? password = null)
+    private static ISignInUseCase CreateUseCase(User user, string? password = null)
     {
         var userReadOnlyRepository = new UsersReadOnlyRepositoryBuilder().GetByEmail(user).Build();
         var passwordEncryptor = new PasswordEncryptorBuilder().Verify(password).Build();

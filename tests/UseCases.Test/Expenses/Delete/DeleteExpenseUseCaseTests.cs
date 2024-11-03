@@ -1,17 +1,15 @@
-using CashFlow.Application.UseCases.Expenses.GetById;
-using CashFlow.Communication.Enums;
+using CashFlow.Application.UseCases.Expenses.Delete;
 using CashFlow.Domain.Entities;
 using CashFlow.Exception;
 using CashFlow.Exception.ExceptionsBase;
 using CommonTestUtilities.Entities;
-using CommonTestUtilities.Mapper;
 using CommonTestUtilities.Repositories;
 using CommonTestUtilities.Services;
 using FluentAssertions;
 
-namespace UseCases.Test.Expenses.GetById;
+namespace UseCases.Test.Expenses.Delete;
 
-public class GetByIdExpenseUseCaseTests
+public class DeleteExpenseUseCaseTests
 {
     [Fact]
     public async Task Success()
@@ -23,16 +21,10 @@ public class GetByIdExpenseUseCaseTests
         var useCase = CreateUseCase(user, expense);
 
         // Act
-        var result = await useCase.Execute(expense.Id);
+        var act = async () => await useCase.Execute(expense.Id);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Id.Should().Be(expense.Id);
-        result.Title.Should().Be(expense.Title);
-        result.Description.Should().Be(expense.Description);
-        result.Date.Should().Be(expense.Date);
-        result.Amount.Should().Be(expense.Amount);
-        result.PaymentType.Should().Be((PaymentType)expense.PaymentType);
+        await act.Should().NotThrowAsync();
     }
     
     [Fact]
@@ -51,12 +43,14 @@ public class GetByIdExpenseUseCaseTests
         result.Where(exception => exception.GetErrors().Count == 1 && exception.GetErrors().Contains(ResourceErrorMessages.DataNotFound));
     }
     
-    private static IGetByIdExpenseUseCase CreateUseCase(User user, Expense? expense = null)
+    
+    private static IDeleteExpenseUseCase CreateUseCase(User user, Expense? expense = null)
     {
         var authenticatedUser = AuthenticatedUserServiceBuilder.Build(user);
-        var repository = new ExpensesReadOnlyRepositoryBuilder().GetById(user, expense).Build();
-        var mapper = MapperBuilder.Build();
+        var expensesReadOnlyRepository = new ExpensesReadOnlyRepositoryBuilder().GetById(user, expense).Build();
+        var expensesWriteOnlyRepository = ExpensesWriteOnlyRepositoryBuilder.Build();
+        var unitOfWork = UnitOfWorkBuilder.Build();
         
-        return new GetByIdExpenseUseCase(authenticatedUser, repository, mapper);
+        return new DeleteExpenseUseCase(authenticatedUser, expensesReadOnlyRepository, expensesWriteOnlyRepository, unitOfWork);
     }
 }

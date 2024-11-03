@@ -61,7 +61,7 @@ public class RegisterUserUseCaseTests
         result.Where(ex => ex.GetErrors().Count == 1 && ex.GetErrors().Contains(ResourceErrorMessages.EmailAlreadyRegistered));
     }
 
-    private static RegisterUserUseCase CreateUseCase(string? email = null)
+    private static IRegisterUserUseCase CreateUseCase(string? email = null)
     {
         var userReadOnlyRepositoryBuilder = new UsersReadOnlyRepositoryBuilder();
         if (!string.IsNullOrWhiteSpace(email))

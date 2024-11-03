@@ -48,7 +48,7 @@ public class RegisterExpenseUseCaseTests
         result.Where(ex => ex.GetErrors().Count == 1 && ex.GetErrors().Contains(ResourceErrorMessages.TitleIsRequired));    
     }
     
-    private static RegisterExpenseUseCase CreateUseCase(User user)
+    private static IRegisterExpenseUseCase CreateUseCase(User user)
     {
         var authenticatedUser = AuthenticatedUserServiceBuilder.Build(user);
         var repository = ExpensesWriteOnlyRepositoryBuilder.Build();

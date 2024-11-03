@@ -10,11 +10,9 @@ public class DeleteExpenseUseCase(
     IAuthenticatedUserService authenticatedUserService,
     IExpensesReadOnlyRepository expensesReadOnlyRepository,
     IExpensesWriteOnlyRepository expensesWriteOnlyRepository,
-    IUnitOfWork unitOfWork,
-    IMapper mapper)
+    IUnitOfWork unitOfWork)
     : IDeleteExpenseUseCase
 {
-    private readonly IMapper _mapper = mapper;
 
     public async Task Execute(long id)
     {

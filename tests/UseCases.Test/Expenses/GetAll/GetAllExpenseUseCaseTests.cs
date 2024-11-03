@@ -32,7 +32,7 @@ public class GetAllExpenseUseCaseTests
         });
     }
     
-    private static GetAllExpenseUseCase CreateUseCase(User user, List<Expense> expenses)
+    private static IGetAllExpenseUseCase CreateUseCase(User user, List<Expense> expenses)
     {
         var authenticatedUser = AuthenticatedUserServiceBuilder.Build(user);
         var repository = new ExpensesReadOnlyRepositoryBuilder().GetAll(user, expenses).Build();

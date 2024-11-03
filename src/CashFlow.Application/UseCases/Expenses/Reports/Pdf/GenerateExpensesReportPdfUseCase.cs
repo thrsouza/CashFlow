@@ -44,7 +44,7 @@ public class GenerateExpensesReportPdfUseCase(
         };
 
         var style = document.Styles["Normal"]!;
-        style.Font.Name = FontHelper.Raleway.REGULAR;
+        style.Font.Name = FontHelper.Raleway.Regular;
 
         var page = CreatePage(document);
         CreateHeaderWithProfilePhotoAndName(page, name: user.Name);
@@ -117,7 +117,7 @@ public class GenerateExpensesReportPdfUseCase(
         logo.Width = new Unit(56, UnitType.Point);
 
         headerRow.Cells[1].AddParagraph(string.Format(ResourceReportGenerationMessages.Hello, name));
-        headerRow.Cells[1].Format.Font = new Font { Name = FontHelper.Raleway.BLACK, Size = 16 };
+        headerRow.Cells[1].Format.Font = new Font { Name = FontHelper.Raleway.Black, Size = 16 };
         headerRow.Cells[1].VerticalAlignment = VerticalAlignment.Center;
         headerRow.Cells[1].Format.LeftIndent = 8;
     }
@@ -130,13 +130,13 @@ public class GenerateExpensesReportPdfUseCase(
 
         paragraph.AddFormattedText(
             string.Format(ResourceReportGenerationMessages.TotalSpentIn, date.ToString("Y")),
-            new Font { Name = FontHelper.Raleway.REGULAR, Size = 15 });
+            new Font { Name = FontHelper.Raleway.Regular, Size = 15 });
 
         paragraph.AddLineBreak();
 
         paragraph.AddFormattedText(
             $"{totalExpenses:#,##0.00} {CurrencySymbol}",
-            new Font { Name = FontHelper.WorkSans.BLACK, Size = 50 });
+            new Font { Name = FontHelper.WorkSans.Black, Size = 50 });
     }
 
     private static Table CreateExpenseTable(Section page)
@@ -152,7 +152,7 @@ public class GenerateExpensesReportPdfUseCase(
     private static void AddExpenseTitleHeader(Cell cell, string title)
     {
         cell.AddParagraph(title);
-        cell.Format.Font = new Font { Name = FontHelper.Raleway.BLACK, Size = 14, Color = ColorHelper.Black };
+        cell.Format.Font = new Font { Name = FontHelper.Raleway.Black, Size = 14, Color = ColorHelper.Black };
         cell.Shading.Color = ColorHelper.RedLight;
         cell.VerticalAlignment = VerticalAlignment.Center;
         cell.MergeRight = 2;
@@ -162,7 +162,7 @@ public class GenerateExpensesReportPdfUseCase(
     private static void AddExpenseAmountHeader(Cell cell)
     {
         cell.AddParagraph(ResourceReportGenerationMessages.Amount);
-        cell.Format.Font = new Font { Name = FontHelper.Raleway.BLACK, Size = 14, Color = ColorHelper.White };
+        cell.Format.Font = new Font { Name = FontHelper.Raleway.Black, Size = 14, Color = ColorHelper.White };
         cell.Shading.Color = ColorHelper.RedDark;
         cell.VerticalAlignment = VerticalAlignment.Center;
     }
@@ -170,7 +170,7 @@ public class GenerateExpensesReportPdfUseCase(
     private static void AddExpenseAmountValue(Cell cell, decimal value)
     {
         cell.AddParagraph($"-{value:#,##0.00} {CurrencySymbol}");
-        cell.Format.Font = new Font { Name = FontHelper.WorkSans.REGULAR, Size = 12, Color = ColorHelper.Black };
+        cell.Format.Font = new Font { Name = FontHelper.WorkSans.Regular, Size = 12, Color = ColorHelper.Black };
         cell.Shading.Color = ColorHelper.White;
         cell.VerticalAlignment = VerticalAlignment.Center;
     }
@@ -181,7 +181,7 @@ public class GenerateExpensesReportPdfUseCase(
         row.Height = ExpenseTableRowHeight;
         row.Cells[0].AddParagraph(description);
         row.Cells[0].Format.Font = new Font
-            { Name = FontHelper.WorkSans.REGULAR, Size = 10, Color = ColorHelper.Black };
+            { Name = FontHelper.WorkSans.Regular, Size = 10, Color = ColorHelper.Black };
         row.Cells[0].Shading.Color = ColorHelper.GreenLight;
         row.Cells[0].VerticalAlignment = VerticalAlignment.Center;
         row.Cells[0].Format.LeftIndent = ExpenseTableLeftIndent;
@@ -197,7 +197,7 @@ public class GenerateExpensesReportPdfUseCase(
 
     private static void SetStyleBaseForExpenseInformation(Cell cell)
     {
-        cell.Format.Font = new Font { Name = FontHelper.WorkSans.REGULAR, Size = 12, Color = ColorHelper.Black };
+        cell.Format.Font = new Font { Name = FontHelper.WorkSans.Regular, Size = 12, Color = ColorHelper.Black };
         cell.Shading.Color = ColorHelper.GreenDark;
         cell.VerticalAlignment = VerticalAlignment.Center;
     }

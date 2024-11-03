@@ -18,7 +18,7 @@ public class DeleteExpenseTests : CashFlowClassFixture
         : base(webApplicationFactory)
     {
         _token = webApplicationFactory.UserTeamMember.GetToken();
-        _expenseId = webApplicationFactory.Expense.GetId();
+        _expenseId = webApplicationFactory.ExpenseTeamMember.GetId();
     }
 
     [Fact]

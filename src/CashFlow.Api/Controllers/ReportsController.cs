@@ -10,7 +10,7 @@ namespace CashFlow.Api.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize(Roles = Roles.Admin)]
-public class ReportController : ControllerBase
+public class ReportsController : ControllerBase
 {
     [HttpGet("excel")]
     [ProducesResponseType(StatusCodes.Status200OK)]

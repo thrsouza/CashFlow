@@ -7,7 +7,7 @@ using ClosedXML.Excel;
 
 namespace CashFlow.Application.UseCases.Expenses.Reports.Excel;
 
-internal class GenerateExpensesReportExcelUseCase(
+public class GenerateExpensesReportExcelUseCase(
     IAuthenticatedUserService authenticatedUserService,
     IExpensesReadOnlyRepository repository)
     : IGenerateExpensesReportExcelUseCase

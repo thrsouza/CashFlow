@@ -2,16 +2,16 @@
 
 public static class FontHelper
 {
-    public const string DEFAULT = Raleway.REGULAR;
+    public const string Default = Raleway.Regular;
 
     public struct Raleway
     {
-        public const string REGULAR = "Raleway-Regular";
-        public const string BLACK = "Raleway-Black";
+        public const string Regular = "Raleway-Regular";
+        public const string Black = "Raleway-Black";
     }
     public struct WorkSans
     {
-        public const string REGULAR = "WorkSans-Regular";
-        public const string BLACK = "WorkSans-Black";
+        public const string Regular = "WorkSans-Regular";
+        public const string Black = "WorkSans-Black";
     }
 }

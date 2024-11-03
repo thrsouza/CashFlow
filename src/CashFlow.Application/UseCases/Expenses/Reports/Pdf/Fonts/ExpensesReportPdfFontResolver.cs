@@ -9,7 +9,7 @@ public class ExpensesReportPdfFontResolver : IFontResolver
     public byte[]? GetFont(string faceName)
     {
         var stream = ReadFontFile(faceName);
-        stream ??= ReadFontFile(FontHelper.DEFAULT)!;
+        stream ??= ReadFontFile(FontHelper.Default)!;
 
         var lenght = (int)stream.Length;
         var data = new byte[lenght];

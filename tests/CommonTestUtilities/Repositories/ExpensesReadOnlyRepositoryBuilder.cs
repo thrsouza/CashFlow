@@ -25,6 +25,13 @@ public class ExpensesReadOnlyRepositoryBuilder
         return this;
     }
     
+    public ExpensesReadOnlyRepositoryBuilder GetAllByDate(User user, List<Expense> expenses)
+    {
+        _repository.Setup(x => x.GetAllByDate(It.IsAny<DateTime>(), It.IsAny<DateTime>(), user)).ReturnsAsync(expenses);
+
+        return this;
+    }
+    
     public IExpensesReadOnlyRepository Build()
     {
         return _repository.Object;

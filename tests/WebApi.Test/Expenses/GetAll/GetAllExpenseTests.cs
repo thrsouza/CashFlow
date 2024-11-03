@@ -4,15 +4,22 @@ using FluentAssertions;
 
 namespace WebApi.Test.Expenses.GetAll;
 
-public class GetAllExpenseTests(CashFlowWebApplicationFactory webApplicationFactory) : CashFlowClassFixture(webApplicationFactory)
+public class GetAllExpenseTests : CashFlowClassFixture
 {
-    private readonly CashFlowWebApplicationFactory _webApplicationFactory = webApplicationFactory;
     private const string Uri = "/api/expenses";
+    
+    private readonly string _token;
+
+    public GetAllExpenseTests(CashFlowWebApplicationFactory webApplicationFactory) 
+        : base(webApplicationFactory)
+    {
+        _token = webApplicationFactory.UserTeamMember.GetToken();
+    }
 
     [Fact]
     public async Task Success()
     {
-        var response = await DoGetAsync(requestUri: Uri, token: _webApplicationFactory.GetToken());
+        var response = await DoGetAsync(requestUri: Uri, token: _token);
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 

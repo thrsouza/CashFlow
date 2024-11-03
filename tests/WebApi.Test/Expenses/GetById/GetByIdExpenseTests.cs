@@ -8,23 +8,30 @@ using WebApi.Test.InlineData;
 
 namespace WebApi.Test.Expenses.GetById;
 
-public class GetByIdExpenseTests(CashFlowWebApplicationFactory webApplicationFactory) : CashFlowClassFixture(webApplicationFactory)
+public class GetByIdExpenseTests : CashFlowClassFixture
 {
-    private readonly CashFlowWebApplicationFactory _webApplicationFactory = webApplicationFactory;
     private const string Uri = "/api/expenses";
+    
+    private readonly string _token;
+    private readonly long _expenseId;
+
+    public GetByIdExpenseTests(CashFlowWebApplicationFactory webApplicationFactory)
+        : base(webApplicationFactory)
+    {
+        _token = webApplicationFactory.UserTeamMember.GetToken();
+        _expenseId = webApplicationFactory.Expense.GetId();
+    }
 
     [Fact]
     public async Task Success()
     {
-        var expenseId = _webApplicationFactory.GetExpenseId();
-        
-        var response = await DoGetAsync(requestUri: $"{Uri}/{expenseId}", token: _webApplicationFactory.GetToken());
+        var response = await DoGetAsync(requestUri: $"{Uri}/{_expenseId}", token: _token);
 
         var body = await response.Content.ReadAsStreamAsync();
 
         var json = await JsonDocument.ParseAsync(body);
 
-        json.RootElement.GetProperty("id").GetInt64().Should().Be(expenseId);
+        json.RootElement.GetProperty("id").GetInt64().Should().Be(_expenseId);
         json.RootElement.GetProperty("title").GetString().Should().NotBeNullOrWhiteSpace();
         json.RootElement.GetProperty("description").GetString().Should().NotBeNullOrWhiteSpace();
         json.RootElement.GetProperty("date").GetDateTime().Should().NotBeAfter(DateTime.Today);
@@ -38,7 +45,7 @@ public class GetByIdExpenseTests(CashFlowWebApplicationFactory webApplicationFac
     [ClassData(typeof(CultureInlineData))]
     public async Task Error_Expense_Not_Found(string culture)
     {
-        var response = await DoGetAsync(requestUri: $"{Uri}/{1000}", token: _webApplicationFactory.GetToken(), culture: culture);
+        var response = await DoGetAsync(requestUri: $"{Uri}/{1000}", token: _token, culture: culture);
         
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
 

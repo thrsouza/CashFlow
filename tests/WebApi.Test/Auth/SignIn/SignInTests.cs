@@ -6,13 +6,21 @@ using FluentAssertions;
 
 namespace WebApi.Test.Auth.SignIn;
 
-public class SignInTests(CashFlowWebApplicationFactory webApplicationFactory) : CashFlowClassFixture(webApplicationFactory)
+public class SignInTests : CashFlowClassFixture
 {
-    private readonly string _name = webApplicationFactory.GetName();
-    private readonly string _email = webApplicationFactory.GetEmail();
-    private readonly string _password = webApplicationFactory.GetPassword();
-    
     private const string Uri = "/api/authorization";
+
+    private readonly string _name;
+    private readonly string _email;
+    private readonly string _password;
+
+    public SignInTests(CashFlowWebApplicationFactory webApplicationFactory)
+        : base(webApplicationFactory)
+    {
+        _name = webApplicationFactory.UserTeamMember.GetName();
+        _email = webApplicationFactory.UserTeamMember.GetEmail();
+        _password = webApplicationFactory.UserTeamMember.GetPassword();
+    }
 
     [Fact]
     public async Task Success()

@@ -5,4 +5,6 @@ namespace CashFlow.Domain.Repositories.Users;
 public interface IUsersWriteOnlyRepository
 {
     Task Add(User user);
+    
+    Task Delete(long id);
 }

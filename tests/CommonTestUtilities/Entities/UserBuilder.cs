@@ -12,7 +12,7 @@ public static class UserBuilder
         var passwordEncryptor = new PasswordEncryptorBuilder().Build();
         
         var user = new Faker<User>()
-            .RuleFor(user => user.Id, faker => faker.UniqueIndex)
+            .RuleFor(user => user.Id, faker => faker.IndexFaker)
             .RuleFor(user => user.Name, faker => faker.Person.FullName)
             .RuleFor(user => user.Email, (faker, user) => faker.Internet.Email(user.Name))
             .RuleFor(user => user.Password, faker => passwordEncryptor.Encrypt(faker.Internet.Password()))

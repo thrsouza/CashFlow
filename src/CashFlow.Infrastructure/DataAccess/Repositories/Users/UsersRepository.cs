@@ -36,4 +36,11 @@ internal class UsersRepository(CashFlowDbContext dbContext) : IUsersReadOnlyRepo
     {
         dbContext.Users.Update(user);
     }
+    
+    public async Task Delete(long id)
+    {
+        var user = await dbContext.Users.FirstAsync(user => user.Id == id);
+        
+        dbContext.Users.Remove(user);
+    }
 }

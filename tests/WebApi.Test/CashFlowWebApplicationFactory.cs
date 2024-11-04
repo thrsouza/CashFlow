@@ -53,7 +53,7 @@ public class CashFlowWebApplicationFactory : WebApplicationFactory<Program>
         var expenseAdministrator = AddExpense(dbContext, userAdministrator);
         ExpenseAdministrator = new ExpenseIdentityManager(expense: expenseAdministrator);
         
-        dbContext.SaveChanges();
+        dbContext.SaveChangesAsync();
     }
 
     private User AddUserAdministrator(CashFlowDbContext dbContext, IPasswordEncryptor passwordEncryptor, IAccessTokenGenerator accessTokenGenerator)

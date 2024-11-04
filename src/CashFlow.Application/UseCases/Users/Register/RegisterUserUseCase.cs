@@ -42,7 +42,7 @@ public class RegisterUserUseCase(
 
     private async Task Validate(RequestRegisterUserJson requestRegister)
     {
-        var result = await new RequestRegisterUserValidator().ValidateAsync(requestRegister);
+        var result = await new RegisterUserValidator().ValidateAsync(requestRegister);
 
         var emailAlreadyExists = await usersReadOnlyRepository.ExistActiveUserWithEmail(requestRegister.Email);
 

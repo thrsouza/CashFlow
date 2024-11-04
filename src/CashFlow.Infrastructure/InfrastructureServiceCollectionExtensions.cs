@@ -52,6 +52,7 @@ public static class InfrastructureServiceCollectionExtensions
 
         services.AddScoped<IUsersReadOnlyRepository, UsersRepository>();
         services.AddScoped<IUsersWriteOnlyRepository, UsersRepository>();
+        services.AddScoped<IUsersUpdateOnlyRepository, UsersRepository>();
     }
     
     private static void AddAccessTokenGenerator(IServiceCollection services, IConfiguration configuration)

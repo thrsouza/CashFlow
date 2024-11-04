@@ -27,7 +27,7 @@ public class GetByIdExpenseTests : CashFlowClassFixture
     {
         var response = await DoGetAsync(requestUri: $"{Uri}/{_expenseId}", token: _token);
 
-        var body = await response.Content.ReadAsStreamAsync();
+        await using var body = await response.Content.ReadAsStreamAsync();
 
         var json = await JsonDocument.ParseAsync(body);
 
@@ -49,7 +49,7 @@ public class GetByIdExpenseTests : CashFlowClassFixture
         
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
 
-        var body = await response.Content.ReadAsStreamAsync();
+        await using var body = await response.Content.ReadAsStreamAsync();
  
         var json = await JsonDocument.ParseAsync(body);
 

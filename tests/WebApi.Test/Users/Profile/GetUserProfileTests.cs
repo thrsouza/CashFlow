@@ -27,7 +27,7 @@ public class GetUserProfileTests : CashFlowClassFixture
         
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         
-        var body = await response.Content.ReadAsStreamAsync();
+        await using var body = await response.Content.ReadAsStreamAsync();
         
         var json = await JsonDocument.ParseAsync(body);
         

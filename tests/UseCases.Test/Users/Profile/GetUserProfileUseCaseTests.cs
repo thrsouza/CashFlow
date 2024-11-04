@@ -32,5 +32,4 @@ public class GetUserProfileUseCaseTests
         
         return new GetUserProfileUseCase(authenticatedUserService, mapper);
     }
-    
 }

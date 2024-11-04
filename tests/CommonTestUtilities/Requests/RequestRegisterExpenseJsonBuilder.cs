@@ -9,8 +9,6 @@ public static class RequestRegisterExpenseJsonBuilder
 {
     public static RequestRegisterExpenseJson Build()
     {
-        var faker = new Faker();
-
         return new Faker<RequestRegisterExpenseJson>()
             .RuleFor(expense => expense.Title, faker => faker.Commerce.ProductName())
             .RuleFor(expense => expense.Description, faker => faker.Commerce.ProductDescription())

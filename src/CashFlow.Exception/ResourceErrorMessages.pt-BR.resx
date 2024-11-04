@@ -153,4 +153,7 @@
   <data name="CredentialsInvalid" xml:space="preserve">
     <value>E-mail e/ou senha inválida.</value>
   </data>
+  <data name="PasswordIncorrect" xml:space="preserve">
+    <value>A senha inserida é diferente da senha atual.</value>
+  </data>
 </root>

@@ -21,7 +21,7 @@ public class RegisterUserTests(CashFlowWebApplicationFactory webApplicationFacto
         
         response.StatusCode.Should().Be(HttpStatusCode.Created);
         
-        var body = await response.Content.ReadAsStreamAsync();
+        await using var body = await response.Content.ReadAsStreamAsync();
 
         var json = await JsonDocument.ParseAsync(body);
         
@@ -40,7 +40,7 @@ public class RegisterUserTests(CashFlowWebApplicationFactory webApplicationFacto
         
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         
-        var body = await response.Content.ReadAsStreamAsync();
+        await using var body = await response.Content.ReadAsStreamAsync();
 
         var json = await JsonDocument.ParseAsync(body);
 

@@ -43,7 +43,7 @@ public class UpdateExpenseTests : CashFlowClassFixture
         
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         
-        var body = await response.Content.ReadAsStreamAsync();
+        await using var body = await response.Content.ReadAsStreamAsync();
 
         var json = await JsonDocument.ParseAsync(body);
 
@@ -64,7 +64,7 @@ public class UpdateExpenseTests : CashFlowClassFixture
         
         response.StatusCode.Should().Be(HttpStatusCode.NotFound);
 
-        var body = await response.Content.ReadAsStreamAsync();
+        await using var body = await response.Content.ReadAsStreamAsync();
  
         var json = await JsonDocument.ParseAsync(body);
 

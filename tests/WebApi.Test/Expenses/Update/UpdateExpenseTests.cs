@@ -25,7 +25,7 @@ public class UpdateExpenseTests : CashFlowClassFixture
     [Fact]
     public async Task Success()
     {
-        var request = RequestRegisterExpenseJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
         
         var response = await DoPutAsync(requestUri: $"{Uri}/{_expenseId}", request: request, token: _token);
 
@@ -36,7 +36,7 @@ public class UpdateExpenseTests : CashFlowClassFixture
     [ClassData(typeof(CultureInlineData))]
     public async Task Error_Title_Name(string culture)
     {
-        var request = RequestRegisterExpenseJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
         request.Title = string.Empty;
         
         var response = await DoPutAsync(requestUri: $"{Uri}/{_expenseId}", request: request, token: _token, culture: culture);
@@ -58,7 +58,7 @@ public class UpdateExpenseTests : CashFlowClassFixture
     [ClassData(typeof(CultureInlineData))]
     public async Task Error_Expense_Not_Found(string culture)
     {
-        var request = RequestRegisterExpenseJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
         
         var response = await DoPutAsync(requestUri: $"{Uri}/{1000}", request: request, token: _token, culture: culture);
         

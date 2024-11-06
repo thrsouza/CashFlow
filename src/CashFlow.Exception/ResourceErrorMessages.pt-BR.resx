@@ -156,4 +156,7 @@
   <data name="PasswordIncorrect" xml:space="preserve">
     <value>A senha inserida é diferente da senha atual.</value>
   </data>
+  <data name="TagTypeIsNotValid" xml:space="preserve">
+    <value>A tag informada não é suportada.</value>
+  </data>
 </root>

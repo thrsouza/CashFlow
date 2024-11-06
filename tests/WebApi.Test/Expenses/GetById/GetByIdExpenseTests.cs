@@ -36,9 +36,13 @@ public class GetByIdExpenseTests : CashFlowClassFixture
         json.RootElement.GetProperty("description").GetString().Should().NotBeNullOrWhiteSpace();
         json.RootElement.GetProperty("date").GetDateTime().Should().NotBeAfter(DateTime.Today);
         json.RootElement.GetProperty("amount").GetDecimal().Should().BeGreaterThan(0);
+        json.RootElement.GetProperty("tags").EnumerateArray().Should().NotBeNullOrEmpty();
         
         var paymentType = json.RootElement.GetProperty("paymentType").GetInt32();
         Enum.IsDefined(typeof(PaymentType), paymentType).Should().BeTrue();
+        
+        foreach (var tag in json.RootElement.GetProperty("tags").EnumerateArray())
+            Enum.IsDefined(typeof(TagType), tag.GetInt32()).Should().BeTrue();
     }
 
     [Theory]

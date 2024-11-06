@@ -16,13 +16,13 @@ public class RegisterExpenseUseCase(
     IMapper mapper)
     : IRegisterExpenseUseCase
 {
-    public async Task<ResponseRegisteredExpenseJson> Execute(RequestRegisterExpenseJson requestRegister)
+    public async Task<ResponseRegisteredExpenseJson> Execute(RequestExpenseJson request)
     {
-        Validate(requestRegister);
+        Validate(request);
         
         var authenticatedUser = await authenticatedUserService.Get();
 
-        var expense = mapper.Map<Expense>(requestRegister);
+        var expense = mapper.Map<Expense>(request);
         expense.UserId = authenticatedUser.Id;
 
         await repository.Add(expense);
@@ -34,11 +34,11 @@ public class RegisterExpenseUseCase(
         return response;
     }
 
-    private static void Validate(RequestRegisterExpenseJson requestRegister)
+    private static void Validate(RequestExpenseJson request)
     {
-        var validator = new RegisterExpenseValidator();
+        var validator = new ExpenseValidator();
 
-        var result = validator.Validate(requestRegister);
+        var result = validator.Validate(request);
 
         if (result.IsValid) return;
         var errorMessages = result.Errors.Select(err => err.ErrorMessage).ToList();

@@ -58,7 +58,7 @@ public class CashFlowWebApplicationFactory : WebApplicationFactory<Program>
 
     private User AddUserAdministrator(CashFlowDbContext dbContext, IPasswordEncryptor passwordEncryptor, IAccessTokenGenerator accessTokenGenerator)
     {
-        var user = UserBuilder.Build(UserRole.Admin);
+        var user = UserBuilder.Build(RoleType.Admin);
         var password = user.Password;
         
         user.Password = passwordEncryptor.Encrypt(user.Password);

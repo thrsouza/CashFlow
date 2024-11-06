@@ -9,7 +9,7 @@ public class User
     public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
     public Guid UserIdentifier { get; set; }
-    public string Role { get; set; } = UserRole.TeamMember;
+    public string Role { get; set; } = RoleType.TeamMember;
 
     public ICollection<Expense> Expenses { get; set; } = [];
 }

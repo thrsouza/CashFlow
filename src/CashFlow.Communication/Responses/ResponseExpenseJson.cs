@@ -10,6 +10,5 @@ public class ResponseExpenseJson
     public DateTime Date { get; set; }
     public decimal Amount { get; set; }
     public PaymentType PaymentType { get; set; }
-    public DateTimeOffset CreatedDate { get; set; }
-    public DateTimeOffset UpdatedDate { get; set; }
+    public IList<TagType> Tags { get; set; } = [];
 }

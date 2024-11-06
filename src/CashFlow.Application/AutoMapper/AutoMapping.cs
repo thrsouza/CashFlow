@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CashFlow.Communication.Enums;
 using CashFlow.Communication.Requests;
 using CashFlow.Communication.Responses;
 using CashFlow.Domain.Entities;
@@ -15,17 +16,21 @@ public class AutoMapping : Profile
 
     private void RequestToEntity()
     {
-        CreateMap<RequestRegisterExpenseJson, Expense>();
-        
         CreateMap<RequestRegisterUserJson, User>()
-            .ForMember(dest => dest.Password, config => config.Ignore());
+            .ForMember(dest => dest.Password, configuration => configuration.Ignore());
+        
+        CreateMap<RequestExpenseJson, Expense>()
+            .ForMember(dest => dest.Tags, configuration => configuration.MapFrom(src => src.Tags.Distinct()));
 
-        CreateMap<RequestUpdateUserJson, Expense>();
+        CreateMap<TagType, Tag>()
+            .ForMember(dest => dest.Value, configuration => configuration.MapFrom(src => src));
     }
 
     private void EntityToResponse()
     {
-        CreateMap<Expense, ResponseExpenseJson>();
+        CreateMap<Expense, ResponseExpenseJson>()
+            .ForMember(dest => dest.Tags, configuration => configuration.MapFrom(src => src.Tags.Select(tag => tag.Value)));
+        
         CreateMap<Expense, ResponseExpensePreviewJson>();
         CreateMap<Expense, ResponseRegisteredExpenseJson>();
         

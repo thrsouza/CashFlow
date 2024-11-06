@@ -1,6 +1,6 @@
-namespace CashFlow.Domain.Enums;
+namespace CashFlow.Communication.Enums;
 
-public enum ExpenseTag
+public enum TagType
 {
     Health = 0,
     Essentials = 1,

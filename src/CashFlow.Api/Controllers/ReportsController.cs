@@ -9,7 +9,7 @@ namespace CashFlow.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize(Roles = UserRole.Admin)]
+[Authorize(Roles = RoleType.Admin)]
 public class ReportsController : ControllerBase
 {
     [HttpGet("excel")]

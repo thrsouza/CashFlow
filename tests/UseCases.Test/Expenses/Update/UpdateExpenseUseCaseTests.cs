@@ -20,7 +20,7 @@ public class UpdateExpenseUseCaseTests
         // Arrange
         var user = UserBuilder.Build();
         var expense = ExpenseBuilder.Build(user);
-        var request = RequestRegisterExpenseJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
 
         var useCase = CreateUseCase(user, expense);
 
@@ -44,7 +44,7 @@ public class UpdateExpenseUseCaseTests
         // Arrange
         var user = UserBuilder.Build();
         var expense = ExpenseBuilder.Build(user);
-        var request = RequestRegisterExpenseJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
         request.Title = string.Empty;
 
         var useCase = CreateUseCase(user, expense);
@@ -64,7 +64,7 @@ public class UpdateExpenseUseCaseTests
         // Arrange
         var user = UserBuilder.Build();
         var useCase = CreateUseCase(user);
-        var request = RequestRegisterExpenseJsonBuilder.Build();
+        var request = RequestExpenseJsonBuilder.Build();
 
         // Act
         var act = async () => await useCase.Execute(id: 1000, request);

@@ -159,6 +159,15 @@ namespace CashFlow.Exception {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The tag type is not supported..
+        /// </summary>
+        public static string TagTypeIsNotValid {
+            get {
+                return ResourceManager.GetString("TagTypeIsNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The title is required..
         /// </summary>
         public static string TitleIsRequired {

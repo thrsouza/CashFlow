@@ -14,9 +14,9 @@ public class UpdateExpenseUseCase(
     IMapper mapper)
     : IUpdateExpenseUseCase
 {
-    public async Task Execute(long id, RequestRegisterExpenseJson requestRegister)
+    public async Task Execute(long id, RequestExpenseJson request)
     {
-        Validate(requestRegister);
+        Validate(request);
         
         var authenticatedUser = await authenticatedUserService.Get();
 
@@ -27,18 +27,20 @@ public class UpdateExpenseUseCase(
             throw new CashFlowNotFoundException();
         }
 
-        mapper.Map(requestRegister, expense);
+        expense.Tags.Clear();
+
+        mapper.Map(request, expense);
 
         repository.Update(expense);
 
         await unitOfWork.Commit();
     }
 
-    private static void Validate(RequestRegisterExpenseJson requestRegister)
+    private static void Validate(RequestExpenseJson request)
     {
-        var validator = new RegisterExpenseValidator();
+        var validator = new ExpenseValidator();
 
-        var result = validator.Validate(requestRegister);
+        var result = validator.Validate(request);
 
         if (result.IsValid) return;
         

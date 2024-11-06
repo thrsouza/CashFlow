@@ -1,0 +1,17 @@
+name: Build & Run Tests CashFlow API
+
+trigger:
+- develop
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: Build Solution
+  inputs:
+    command: build
+- task: DotNetCoreCLI@2
+  displayName: Run Unit & Integration Tests
+  inputs:
+    command: test

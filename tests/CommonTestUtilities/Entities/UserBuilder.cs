@@ -7,7 +7,7 @@ namespace CommonTestUtilities.Entities;
 
 public static class UserBuilder
 {
-    public static User Build(string? role = Roles.TeamMember)
+    public static User Build(string? role = UserRole.TeamMember)
     {
         var passwordEncryptor = new PasswordEncryptorBuilder().Build();
         

@@ -12,6 +12,6 @@ public class Expense
     public decimal Amount { get; set; }
     public PaymentType PaymentType { get; set; }
     
-    
     public User User { get; set; } = default!;
+    public ICollection<Tag> Tags { get; set; } = [];
 }

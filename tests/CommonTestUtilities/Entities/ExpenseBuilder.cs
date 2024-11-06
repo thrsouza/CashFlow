@@ -9,7 +9,7 @@ public static class ExpenseBuilder
     public static List<Expense> BuildList(User user, int count = 10)
     {
         return new Faker<Expense>()
-            .RuleFor(expense => expense.Id, faker => faker.IndexFaker)
+            .RuleFor(expense => expense.Id, faker => faker.UniqueIndex)
             .RuleFor(expense => expense.Title, faker => faker.Commerce.ProductName())
             .RuleFor(expense => expense.Description, faker => faker.Commerce.ProductDescription())
             .RuleFor(expense => expense.Date, faker => faker.Date.Past())
@@ -22,7 +22,7 @@ public static class ExpenseBuilder
     public static Expense Build(User user)
     {
         return new Faker<Expense>()
-            .RuleFor(expense => expense.Id, faker => faker.IndexFaker)
+            .RuleFor(expense => expense.Id, faker => faker.UniqueIndex)
             .RuleFor(expense => expense.Title, faker => faker.Commerce.ProductName())
             .RuleFor(expense => expense.Description, faker => faker.Commerce.ProductDescription())
             .RuleFor(expense => expense.Date, faker => faker.Date.Past())

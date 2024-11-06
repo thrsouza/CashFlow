@@ -9,7 +9,6 @@ public class CashFlowDbContext(DbContextOptions options) : DbContext(options)
     public DbSet<Expense> Expenses { get; set; }
     public DbSet<User> Users { get; set; }
     
-    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Expense>(model =>
@@ -35,6 +34,15 @@ public class CashFlowDbContext(DbContextOptions options) : DbContext(options)
             model.Property(x => x.Password).HasColumnType("VARCHAR(256)").IsRequired();
             model.Property(x => x.UserIdentifier).HasColumnType("VARCHAR(128)").IsRequired();
             model.Property(x => x.Role).HasColumnType("VARCHAR(32)").IsRequired();
+        });
+
+        modelBuilder.Entity<Tag>(model =>
+        {
+            model.ToTable("Tags");
+            model.HasKey(x => x.Id);
+            model.Property(x => x.Id).HasColumnType("BIGINT").IsRequired();
+            model.Property(x => x.Value).HasColumnType("INT").IsRequired();
+            model.Property(x => x.ExpenseId).HasColumnType("BIGINT").IsRequired();
         });
     }
 }

@@ -4,6 +4,7 @@ trigger:
 - develop
 
 pool:
+  name: Sauron-Agent-Pool
   vmImage: ubuntu-latest
 
 steps:

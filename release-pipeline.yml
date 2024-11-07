@@ -1,0 +1,40 @@
+name: Delivery CashFlow API
+
+trigger:
+- main
+
+variables:
+  poolName: 'Sauron-Agent-Pool'
+  dockerRegistryServiceConnection: 'bb3c0c20-6588-4bd6-b7f5-34b35eeb62ef'
+  imageRepository: 'cashflow'
+  containerRegistry: 'cashflow7.azurecr.io'
+  dockerfilePath: 'Dockerfile'
+  tag: '$(Build.BuildId)'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+    
+pool:
+  name: $(poolName)
+  vmImage: $(vmImageName)
+  
+steps:
+  - task: DownloadSecureFile@1
+    name: appSettings
+    displayName: 'Download appsettings.Production.json'
+    inputs:
+      secureFile: 'appsettings.Production.json'
+      
+  - script: |
+      cp $(appSettings.secureFilePath) src/CashFlow.Api/appsettings.Production.json
+    
+  - task: Docker@2
+    displayName: Build and push an image to container registry
+    inputs:
+      command: buildAndPush
+      repository: $(imageRepository)
+      dockerfile: $(dockerfilePath)
+      containerRegistry: $(dockerRegistryServiceConnection)
+      tags: |
+        latest
+        $(tag)

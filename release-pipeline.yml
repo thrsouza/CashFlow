@@ -1,7 +1,7 @@
 name: Delivery CashFlow API
 
 trigger:
-  - main
+- main
 
 variables:
   poolName: 'Sauron-Agent-Pool'
